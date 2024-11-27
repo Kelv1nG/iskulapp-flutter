@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:school_erp/pages/events/helpers/mock_events.dart';
-import 'package:school_erp/pages/events/wdigets/event_content.dart';
-import 'package:school_erp/pages/common_widgets/default_layout.dart';
+import 'package:school_erp/features/auth/auth_repository/schemas/user.dart';
+import 'package:school_erp/pages/home/app_body/views/feeds/widgets/feed_content.dart';
+import 'package:school_erp/pages/home/app_body/views/feeds/helpers/mock_feeds.dart';
+import 'package:school_erp/pages/home/app_body/views/feeds/widgets/feeds_modal_form.dart';
 
-class EventsPage extends StatefulWidget {
-  const EventsPage({super.key});
+class FeedsWidget extends StatefulWidget {
+  final AuthenticatedUser user;
+
+  const FeedsWidget({super.key, required this.user});
 
   @override
-  createState() => _EventsPageState();
+  createState() => _FeedsWidgetState();
 }
 
-class _EventsPageState extends State<EventsPage> {
+class _FeedsWidgetState extends State<FeedsWidget> {
   final ScrollController _scrollController = ScrollController();
-  late final List<Event> _events = [];
+  late final List<Feed> _feeds = [];
 
   // Adjust number of rows to retreive on request
   final int _countPerLoad = 10;
@@ -24,7 +27,7 @@ class _EventsPageState extends State<EventsPage> {
   void initState() {
     super.initState();
     _scrollController.addListener(_scrollListener);
-    _loadEvents();
+    _loadFeeds();
   }
 
   @override
@@ -38,25 +41,25 @@ class _EventsPageState extends State<EventsPage> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       if (!_isLoading) {
-        _loadEvents();
+        _loadFeeds();
       }
     }
   }
 
-  Future<void> _loadEvents() async {
+  Future<void> _loadFeeds() async {
     setState(() {
       _isLoading = true;
     });
 
-    List<Event> fetchedEvents =
-        await DummyEventDatabase().getFeeds(_currentOffset, _countPerLoad);
+    List<Feed> fetchedFeeds =
+        await DummyFeedDatabase().getFeeds(_currentOffset, _countPerLoad);
 
     setState(() {
       _isLoading = false;
-      _events.addAll(fetchedEvents);
+      _feeds.addAll(fetchedFeeds);
 
-      if (fetchedEvents.length < _countPerLoad) {
-        _currentOffset += fetchedEvents.length;
+      if (fetchedFeeds.length < _countPerLoad) {
+        _currentOffset += fetchedFeeds.length;
       } else {
         _currentOffset += _countPerLoad;
       }
@@ -65,21 +68,22 @@ class _EventsPageState extends State<EventsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultLayout(title: "Events Page", content: [
-      Expanded(
-        child: ListView.builder(
+    return Stack(
+      children: [
+        ListView.builder(
           controller: _scrollController,
           itemCount: _currentOffset + 1,
           itemBuilder: (BuildContext context, int index) {
-            if (index == _events.length) {
+            if (index == _feeds.length) {
               return _isLoading
                   ? Center(child: CircularProgressIndicator())
-                  : SizedBox.shrink();
+                  : SizedBox.shrink(); // REMINDER: Use in learn view also
             }
-            return EventContent(eventContent: _events[index]);
+            return FeedContent(feedContent: _feeds[index]);
           },
         ),
-      ),
-    ]);
+        FeedsModalForm()
+      ],
+    );
   }
 }
