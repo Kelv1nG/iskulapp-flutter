@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:school_erp/pages/common_widgets/custom_app_bar.dart';
+import 'package:school_erp/enums/question_type.dart';
 import 'package:school_erp/pages/login/widgets/rounded_container.dart';
 import 'package:school_erp/theme/colors.dart';
 import './widgets/widgets.dart';
-import 'question_type.dart';
 
 class QuestionBuilderPage extends StatelessWidget {
   const QuestionBuilderPage({super.key});

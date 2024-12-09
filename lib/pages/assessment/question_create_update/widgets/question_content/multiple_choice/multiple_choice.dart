@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:school_erp/pages/assignment/assignment_add/question_builder_page/widgets/question_content/action_button.dart';
-import 'package:school_erp/pages/assignment/assignment_add/question_builder_page/widgets/question_content/add_item_button.dart';
-import 'package:school_erp/pages/assignment/assignment_add/question_builder_page/widgets/question_content/multiple_choice/multiple_choice_answer_modal.dart';
+import 'package:school_erp/pages/assessment/question_create_update/widgets/question_content/action_button.dart';
+import 'package:school_erp/pages/assessment/question_create_update/widgets/question_content/add_item_button.dart';
+import 'package:school_erp/pages/assessment/question_create_update/widgets/question_content/multiple_choice/multiple_choice_answer_modal.dart';
 import 'package:school_erp/pages/common_widgets/custom_snackbar.dart';
 
 class MultipleChoiceContent extends StatefulWidget {

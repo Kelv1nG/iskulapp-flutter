@@ -1,25 +1,32 @@
-import 'package:school_erp/pages/assignment/assignment_add/question_builder_page/widgets/question_content/action_button.dart';
-import 'package:school_erp/pages/common_widgets/common_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:school_erp/pages/assessment/question_create_update/widgets/question_content/action_button.dart';
+import 'package:school_erp/pages/common_widgets/common_modal.dart';
 
-class TrueOrFalseAnswerModal extends StatefulModal {
-  static const List<String> trueFalseChoices = ['True', 'False'];
+class MultipleChoiceAnswerModal extends StatefulModal {
+  final List<String> choices;
+  static String? _selectedAnswer;
 
-  TrueOrFalseAnswerModal(BuildContext context)
-      : super(
+  MultipleChoiceAnswerModal({
+    required BuildContext context,
+    required this.choices,
+  }) : super(
           context: context,
           title: '',
           contentBuilder: (BuildContext context, StateSetter setState) {
-            return _buildContent(context, setState);
+            return _buildContent(context, setState, choices);
           },
           actionsBuilder: (BuildContext context, StateSetter setState) {
             return _buildActions(context, setState);
           },
         );
 
-  static String _selectedAnswer = 'True';
+  static Widget _buildContent(
+    BuildContext context,
+    StateSetter setState,
+    List<String> choices,
+  ) {
+    _selectedAnswer ??= choices.first;
 
-  static Widget _buildContent(BuildContext context, StateSetter setState) {
     return DropdownButtonFormField<String>(
       decoration: const InputDecoration(
         labelText: "Answer",
@@ -37,7 +44,7 @@ class TrueOrFalseAnswerModal extends StatefulModal {
           });
         }
       },
-      items: trueFalseChoices.map<DropdownMenuItem<String>>((String value) {
+      items: choices.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),

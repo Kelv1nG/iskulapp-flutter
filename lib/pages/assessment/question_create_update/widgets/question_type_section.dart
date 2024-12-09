@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../question_type.dart';
+import 'package:school_erp/enums/question_type.dart';
 
 class QuestionTypeSection extends StatelessWidget {
   final QuestionType questionType;

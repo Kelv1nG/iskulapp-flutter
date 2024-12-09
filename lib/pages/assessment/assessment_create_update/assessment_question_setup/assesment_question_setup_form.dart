@@ -8,7 +8,7 @@ import 'package:school_erp/constants/common/validation.dart'
 import 'package:school_erp/features/assessment/cubit/assessment_cubit.dart';
 import 'package:school_erp/features/assessment/cubit/assessment_state.dart';
 import 'package:school_erp/features/transition/clean_slide_transition.dart';
-import 'package:school_erp/pages/assignment/assignment_add/question_builder_page/question_builder_page.dart';
+import 'package:school_erp/pages/assessment/question_create_update/question_builder_page.dart';
 import 'package:school_erp/pages/common_widgets/form_fields/labeled_dropdown.dart';
 import 'package:school_erp/pages/common_widgets/form_fields/number_input.dart';
 import 'package:school_erp/theme/colors.dart';

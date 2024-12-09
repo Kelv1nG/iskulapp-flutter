@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:school_erp/pages/assignment/assignment_add/question_builder_page/widgets/question_content/action_button.dart';
-import 'package:school_erp/pages/assignment/assignment_add/question_builder_page/widgets/question_content/add_item_button.dart';
+import 'package:school_erp/pages/assessment/assessment_create_update/assessment_takers/widgets/add_remove_item_button.dart';
+import 'package:school_erp/pages/assessment/question_create_update/widgets/question_content/action_button.dart';
 import 'short_answer_modal.dart';
 
 class ShortAnswerContent extends StatefulWidget {
