@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:school_erp/constants/assessments/form_labels.dart' as form;
 import 'package:school_erp/constants/assessments/form_validation.dart'
     as validation;
-import 'package:school_erp/features/assessment/cubit/assessment_cubit.dart';
+import 'package:school_erp/features/assessment/assessment_cubit/assessment_cubit.dart';
 import 'package:school_erp/models/assessment_taker.dart';
 import 'package:school_erp/models/section.dart';
 import 'package:school_erp/pages/assessment/assessment_create_update/assessment_takers/widgets/add_remove_item_button.dart';
