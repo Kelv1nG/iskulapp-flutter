@@ -44,7 +44,7 @@ class Assessment extends BaseModel {
     int? durationMinutes,
     String? subjectName,
   }) {
-    final assessment = Assessment._(
+    return Assessment._(
       id: id,
       preparedById: preparedById,
       subjectYearId: subjectYearId,
@@ -57,7 +57,6 @@ class Assessment extends BaseModel {
       durationMinutes: durationMinutes,
       subjectName: subjectName,
     );
-    return assessment;
   }
 
   factory Assessment.initialize({
@@ -104,7 +103,6 @@ class Assessment extends BaseModel {
       );
 
   Assessment copyWith({
-    String? id,
     String? preparedById,
     String? subjectYearId,
     AssessmentType? assessmentType,
@@ -117,7 +115,7 @@ class Assessment extends BaseModel {
     String? subjectName,
   }) {
     final assessment = Assessment._(
-      id: id ?? this.id,
+      id: id,
       preparedById: preparedById ?? this.preparedById,
       subjectYearId: subjectYearId ?? this.subjectYearId,
       assessmentType: assessmentType ?? this.assessmentType,
