@@ -9,9 +9,11 @@ class AssessmentTakerRepository extends BaseCrudRepository<AssessmentTaker> {
 
   Future<List<AssessmentTaker>> getByAssessment(String assessmentId) async {
     var results = await database.execute(assessmentTakersSql, [assessmentId]);
+
     if (results.isEmpty) {
       return [];
     }
+
     return results.map(AssessmentTaker.fromRow).toList(growable: false);
   }
 }

@@ -46,6 +46,18 @@ const teacherSectionsBySubjectSql = """
     AND subject_classes.subject_year_id = ?
 """;
 
+const questionsByAssessmentSql = """
+  SELECT assessment_questions.*
+  FROM assessment_questions
+  WHERE assessment_id = ?
+""";
+
+const answersByQuestionSql = """
+  SELECT assessment_question_answers.*
+  FROM assessment_question_answers
+  WHERE question_id = ?
+""";
+
 const assessmentTakersSql = """
   SELECT assessment_takers.*, sections.name AS section_name
   FROM assessment_takers
