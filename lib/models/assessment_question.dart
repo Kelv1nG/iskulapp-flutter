@@ -14,9 +14,19 @@ class AssessmentQuestion extends BaseModel {
     required this.assessmentId,
     required this.question,
     required this.questionType,
+    required this.points,
     this.minWords,
+  });
+
+  AssessmentQuestion.initial({
+    super.id,
+    required this.assessmentId,
+    required this.questionType,
+    this.minWords,
+    String? question,
     int? points,
-  }) : points = points ?? 1;
+  })  : points = points ?? 1,
+        question = question ?? '';
 
   @override
   Map<String, dynamic> get tableData => {

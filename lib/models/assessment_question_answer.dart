@@ -33,9 +33,11 @@ class AssessmentQuestionAnswer extends BaseModel {
 
   factory AssessmentQuestionAnswer.initialize({
     required String assessmentId,
+    required String questionId,
   }) {
     return AssessmentQuestionAnswer._(
       assessmentId: assessmentId,
+      questionId: questionId,
       answer: '',
       isCorrect: false,
     );
