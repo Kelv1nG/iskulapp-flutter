@@ -1,5 +1,5 @@
 import 'package:powersync/powersync.dart';
-import 'package:school_erp/features/assessment/service_result_types/assessment_question_result.dart';
+import 'package:school_erp/features/assessment/services/service_result_types/assessment_question_result.dart';
 import 'package:school_erp/features/powersync/db.dart' as ps;
 import 'package:school_erp/repositories/assessment_question_answer_repository.dart';
 import 'package:school_erp/repositories/assessment_question_repository.dart';
