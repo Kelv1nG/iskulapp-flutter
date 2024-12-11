@@ -27,7 +27,6 @@ class _EssayContentState extends State<EssayContent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // TextFormField for score input
         TextFormField(
           controller: _scoreController,
           keyboardType: TextInputType.number,
@@ -43,7 +42,6 @@ class _EssayContentState extends State<EssayContent> {
           ),
         ),
         const SizedBox(height: 20),
-        // Note under the TextFormField
         RichText(
           text: const TextSpan(
             children: [
@@ -55,8 +53,7 @@ class _EssayContentState extends State<EssayContent> {
                 ),
               ),
               TextSpan(
-                text:
-                    "Essays are to be checked manually by the examiner.", // Rest of the text
+                text: "Essays are to be checked manually by the examiner.",
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 12,
@@ -66,7 +63,6 @@ class _EssayContentState extends State<EssayContent> {
           ),
         ),
         const Spacer(),
-        // Submit button at the bottom
         Center(
           child: ActionButton(
             onPressed: _onNextPressed,

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:school_erp/features/assessment/question_builder_bloc/question_builder_state.dart';
 
-class Question extends StatelessWidget {
-  final TextEditingController questionController;
+class QuestionBody extends StatelessWidget {
+  final QuestionWithAnswers qa;
 
-  // Constructor
-  const Question({
+  const QuestionBody({
+    required this.qa,
     super.key,
-    required this.questionController,
   });
 
   @override
@@ -14,7 +14,7 @@ class Question extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       child: TextFormField(
-        controller: questionController,
+        initialValue: qa.question.question,
         decoration: const InputDecoration(
           labelText: 'Question',
           floatingLabelBehavior: FloatingLabelBehavior.always,

@@ -32,9 +32,10 @@ class _AssessmentQuestionSetupFormState
       assessmentCubit.save();
 
       Navigator.of(context).push(
-        createSlideRoute(
-          QuestionBuilderPage(),
-        ),
+        createSlideRoute(BlocProvider<AssessmentCubit>.value(
+          value: BlocProvider.of<AssessmentCubit>(context),
+          child: const QuestionBuilderPage(),
+        )),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

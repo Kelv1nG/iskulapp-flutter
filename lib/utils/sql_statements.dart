@@ -15,7 +15,7 @@ const teacherAssessmentsSql = """
   WHERE prepared_by = ?
     AND assessment_type = ?
     AND academic_years.id = ?
-  ORDER BY created_at DESC
+  ORDER BY updated_at DESC
 """;
 
 const teacherSubjectsSql = """

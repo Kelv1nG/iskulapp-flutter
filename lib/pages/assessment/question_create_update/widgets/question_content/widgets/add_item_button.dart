@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AddItemButton extends StatelessWidget {
+class AddRemoveItemButton extends StatelessWidget {
   final int index;
   final VoidCallback onAddPressed;
   final VoidCallback onRemovePressed;
 
-  const AddItemButton({
+  const AddRemoveItemButton({
     super.key,
     required this.index,
     required this.onAddPressed,

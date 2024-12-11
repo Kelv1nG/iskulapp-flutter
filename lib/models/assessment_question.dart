@@ -42,7 +42,7 @@ class AssessmentQuestion extends BaseModel {
         id: row['id'],
         assessmentId: row['assessment_id'],
         question: row['question'],
-        questionType: row['question_type'],
+        questionType: QuestionType.fromString(row['question_type']),
         points: row['points'],
         minWords: row['min_words'],
       );

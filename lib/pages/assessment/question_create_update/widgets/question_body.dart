@@ -1,51 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:school_erp/enums/question_type.dart';
 import 'package:school_erp/pages/assessment/question_create_update/widgets/question_content/multiple_choice/multiple_choice.dart';
-import 'package:school_erp/pages/assessment/question_create_update/widgets/question_content/short_answer/short_answer.dart';
-import 'package:school_erp/pages/assessment/question_create_update/widgets/question_content/true_or_false/true_or_false.dart';
-import 'question_content/essay.dart';
+import 'package:school_erp/features/assessment/question_builder_bloc/question_builder_state.dart';
 
-class QuestionBody extends StatelessWidget {
-  final QuestionType questionType;
-  final TextEditingController questionController;
+class AnswersBody extends StatelessWidget {
+  final QuestionWithAnswers qa;
 
-  const QuestionBody(
-      {super.key,
-      required this.questionType,
-      required this.questionController});
+  const AnswersBody({
+    super.key,
+    required this.qa,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Content(
-            questionType: questionType, questionController: questionController),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Content(
+        qa: qa,
       ),
     );
   }
 }
 
 class Content extends StatelessWidget {
-  final QuestionType questionType;
-  final TextEditingController questionController;
+  final QuestionWithAnswers qa;
 
-  const Content(
-      {super.key,
-      required this.questionType,
-      required this.questionController});
+  const Content({
+    super.key,
+    required this.qa,
+  });
 
   @override
   Widget build(BuildContext context) {
-    switch (questionType) {
+    switch (qa.question.questionType) {
       case QuestionType.multipleChoice:
-        return MultipleChoiceContent(questionController: questionController);
-      case QuestionType.shortAnswer:
-        return ShortAnswerContent(questionController: questionController);
-      case QuestionType.trueFalse:
-        return TrueFalseContent(questionController: questionController);
-      case QuestionType.essay:
-        return EssayContent(questionController: questionController);
+        return MultipleChoiceContent(qa: qa);
+      //case QuestionType.shortAnswer:
+      //  return ShortAnswerContent(questionController: questionController);
+      //case QuestionType.trueFalse:
+      //  return TrueFalseContent(questionController: questionController);
+      //case QuestionType.essay:
+      //  return EssayContent(questionController: questionController);
       default:
         return const SizedBox();
     }

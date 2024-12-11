@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:school_erp/enums/assessment_type.dart';
 import 'package:school_erp/features/assessment/assessment_cubit/assessment_cubit.dart';
-import 'package:school_erp/features/assessment/assessment_service.dart';
+import 'package:school_erp/features/assessment/services/assessment_service.dart';
 import 'package:school_erp/features/auth/auth.dart';
 import 'package:school_erp/features/auth/utils.dart';
 import 'package:school_erp/pages/assessment/assessment_create_update/assessment_setup/assessment_setup_form.dart';
@@ -25,7 +25,7 @@ class AssessmentSetupPage extends StatelessWidget {
     final authUser = getAuthUser(authState);
 
     return BlocProvider<AssessmentCubit>(
-      create: (_) {
+      create: (BuildContext context) {
         final assessmentService = AssessmentService();
         return AssessmentCubit(
           assessmentService: assessmentService,
