@@ -119,6 +119,14 @@ class _AssignmentAnswersPageState extends State<AssignmentAnswersPage> {
 
     @override
     Widget build(BuildContext context) {
+        if (questions.isEmpty && _isLoading) {
+            return Expanded(child: Center(child: CircularProgressIndicator()));
+        }
+
+        if (questions.isEmpty) {
+            return Expanded(child: Center(child: Text("No questions")));
+        }
+
         return DefaultLayout(
             title: "Assignment Answers",
             content: [
