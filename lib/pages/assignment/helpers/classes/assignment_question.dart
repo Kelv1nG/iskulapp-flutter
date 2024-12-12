@@ -1,10 +1,25 @@
 // ignore_for_file: non_constant_identifier_names
 
 enum QuestionType  {
-    multipleChoice,
-    essay,
-    shortAnswer,
-    trueOrFalse;
+    multipleChoice('multipleChoice', 'Multiple Choice'),
+    essay('essay', 'Essay'),
+    shortAnswer('shortAnswer', 'Short Answer'),
+    trueOrFalse('trueOrFalse', 'True or False'),
+    invalidType('invalidType', 'Invalid Type');
+
+    final String value;
+    final String displayName;
+
+    const QuestionType(this.value, this.displayName);
+
+    static QuestionType mapStringToQuestionType(String value) {
+
+        return values.firstWhere(
+            (q) => q.value == value,
+            orElse: () => QuestionType.invalidType
+        );
+
+    }
 }
 
 class AssignmentQuestion {
@@ -16,7 +31,7 @@ class AssignmentQuestion {
     AssignmentQuestion(this.type, this.question, this.answers, this.points);
 
     factory AssignmentQuestion.fromJson(Map<String, dynamic> json) {
-        QuestionType questionType = _mapStringToQuestionType(json['type']);
+        QuestionType questionType = QuestionType.mapStringToQuestionType(json['type']);
 
         return AssignmentQuestion(
             questionType,
@@ -24,21 +39,6 @@ class AssignmentQuestion {
             (json['answers'] as List).map((answerJson) => Answers.fromJson(answerJson)).toList(),
             json['points'] ?? 0,  
         );
-    }
-
-    static QuestionType _mapStringToQuestionType(String type) {
-        switch (type) {
-            case 'multipleChoice':
-                return QuestionType.multipleChoice;
-            case 'essay':
-                return QuestionType.essay;
-            case 'shortAnswer':
-                return QuestionType.shortAnswer;
-            case 'trueOrFalse':
-                return QuestionType.trueOrFalse;
-            default:
-            return QuestionType.multipleChoice;
-        }
     }
 }
 
