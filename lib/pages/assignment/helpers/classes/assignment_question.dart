@@ -15,7 +15,7 @@ enum QuestionType  {
     static QuestionType mapStringToQuestionType(String value) {
 
         return values.firstWhere(
-            (q) => q.value == value,
+            (q) => q.value.toLowerCase() == value.toLowerCase(),
             orElse: () => QuestionType.invalidType
         );
 
