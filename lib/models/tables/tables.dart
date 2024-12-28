@@ -1,11 +1,13 @@
+export 'academic_years_table.dart';
 export 'assessments_table.dart';
 export 'assessment_takers_table.dart';
 export 'assessment_questions_table.dart';
+export 'attendances_table.dart';
+export 'sections_table.dart';
+export 'subject_classes_table.dart';
 export 'subjects_table.dart';
 export 'subject_years_table.dart';
-export 'academic_years_table.dart';
 export 'teachers_table.dart';
 export 'teacher_year_table.dart';
 export 'teacher_subjects_table.dart';
-export 'sections_table.dart';
-export 'subject_classes_table.dart';
+export 'user_profiles_table.dart';

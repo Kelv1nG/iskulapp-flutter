@@ -21,8 +21,7 @@ class AssessmentSetupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authState = context.read<AuthBloc>().state;
-    final authUser = getAuthUser(authState);
+    final teacherId = getTeacherId(context);
 
     return BlocProvider<AssessmentCubit>(
       create: (BuildContext context) {
@@ -30,7 +29,7 @@ class AssessmentSetupPage extends StatelessWidget {
         return AssessmentCubit(
           assessmentService: assessmentService,
           assessmentTypeOnCreate: assessmentTypeOnCreate,
-          authUser: authUser,
+          teacherId: teacherId,
           assessment: assessment,
         );
       },
