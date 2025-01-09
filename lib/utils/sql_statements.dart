@@ -74,17 +74,23 @@ const studentsAttendanceBySectionSql = """
 """;
 
 const studentsAttendanceSummariesSql = """
+  WITH summary AS (
   SELECT 
     attendances.student_id,
-    user_profiles.first_name,
-    user_profiles.last_name,
     COUNT(CASE WHEN status = 'present' THEN 1 END) as present,
     COUNT(CASE WHEN status = 'late' THEN 1 END) as late,
     COUNT(CASE WHEN status = 'absent' THEN 1 END) as absent
   FROM attendances
-  LEFT JOIN students ON students.id = attendances.student_id
+  WHERE attendances.attendance_date >= "2023-07-03" AND attendance_date <= "2023-07-31"
+  GROUP BY attendances.student_id
+  )
+  
+  SELECT summary.*,
+    user_profiles.first_name,
+    user_profiles.last_name
+  FROM summary
+  LEFT JOIN students ON students.id = summary.student_id
   LEFT JOIN user_profiles ON user_profiles.user_id = students.user_id
-  GROUP BY attendances.student_id, user_profiles.first_name, user_profiles.last_name
 """;
 
 const studentsBySectionSql = """
