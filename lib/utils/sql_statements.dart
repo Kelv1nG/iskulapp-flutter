@@ -81,7 +81,6 @@ const studentsAttendanceSummariesSql = """
     COUNT(CASE WHEN status = 'late' THEN 1 END) as late,
     COUNT(CASE WHEN status = 'absent' THEN 1 END) as absent
   FROM attendances
-  WHERE attendances.attendance_date >= "2023-07-03" AND attendance_date <= "2023-07-31"
   GROUP BY attendances.student_id
   )
   
