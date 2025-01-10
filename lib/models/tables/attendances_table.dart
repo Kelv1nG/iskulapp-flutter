@@ -9,4 +9,6 @@ const attendancesTable = Table('attendances', [
   Column.text('status'),
   Column.text('created_at'),
   Column.text('updated_at')
+], indexes: [
+  Index('student_id', [IndexedColumn('student_id')])
 ]);
