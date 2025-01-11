@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_erp/enums/filter_by_type.dart';
+import 'package:school_erp/enums/user_role.dart';
 import 'package:school_erp/features/auth/auth_repository/schemas/schemas.dart';
 import 'package:school_erp/features/auth/utils.dart';
 import 'package:school_erp/models/attendance.dart';
@@ -15,10 +16,6 @@ import 'package:school_erp/repositories/sections_repository.dart';
 import 'package:school_erp/repositories/student_repository.dart';
 import 'package:school_erp/theme/colors.dart';
 
-// For testing only. 
-// Remove and replace with proper thing after.
-enum Roles {student, teacher, parent}
-
 class AttendanceCalendarPage extends StatefulWidget{
 
     const AttendanceCalendarPage({super.key});
@@ -31,8 +28,6 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
     late DateTime _firstDay;
     late DateTime _lastDay;
     late DateTime _focusedDay;
-
-    Roles role = Roles.teacher;
 
     SectionRepository sectionRepository = SectionRepository();
     StudentRepository studentRepository = StudentRepository();
@@ -57,6 +52,8 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
         "isStudentAttendanceLoading": false
     };
 
+    AuthenticatedUser? user;
+
     @override
     void initState() {
         super.initState();
@@ -64,8 +61,14 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
         _lastDay = DateTime.now(); 
         _focusedDay = DateTime.now(); 
 
-        if (role == Roles.teacher) _getSectionsOfTeacher();
-        if (role == Roles.student) _getStudentAttendance();
+        _getUserDetails();
+        if (user?.role == UserRole.teacher) _getSectionsOfTeacher();
+        if (user?.role == UserRole.student) _getStudentAttendance();
+    }
+
+    void _getUserDetails() {
+        AuthenticatedUser authUser = getAuthUser(context);
+        setState(() => user = authUser);
     }
 
     void _getStudentAttendance() async {
@@ -75,6 +78,8 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
             List<Attendance> studentAttendance = await attendanceRepository.getStudentAttendance(1);
 
             if (studentAttendance.isEmpty) throw Exception("No attendance record.");
+            print(user!.firstName);
+            print(user!.lastName);
 
             setState(() => attendanceDetails = AttendanceCalendarUtils.convertAttendanceDetails(studentAttendance));
         }
@@ -185,7 +190,7 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
                 ),
 
                 if (filterBy == FilterByType.student && currentSection != null 
-                    || role == Roles.student && !_loadingStates["isStudentAttendanceLoading"]!) 
+                    || user?.role == UserRole.student && !_loadingStates["isStudentAttendanceLoading"]!) 
                 AttendanceCalendar(
                     details: attendanceDetails,
                     firstDay: _firstDay, 
@@ -194,8 +199,7 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
                     onChangeFocusedDate: _onChangeFocusedDate,
                 ), 
                 AttendanceFilters(
-                    // This role is only for testing/development purposes
-                    role: role, 
+                    role: user?.role, 
                     changeStudentFilter: _onChangeStudent,
                     changeSectionFilter: _onChangeSection,
                     changeFilterBy: _onChangeFilterBy,
