@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:school_erp/enums/user_role.dart';
 
 part 'user.freezed.dart';
 part 'user.g.dart';
@@ -8,7 +9,7 @@ class AuthenticatedUser with _$AuthenticatedUser {
   const factory AuthenticatedUser({
     required String id,
     required String email,
-    required String role,
+    required UserRole role,
     @JsonKey(name: 'login_type') required String loginType,
     @JsonKey(name: 'login_id') required String loginId,
     @JsonKey(name: 'first_name') required String firstName,
