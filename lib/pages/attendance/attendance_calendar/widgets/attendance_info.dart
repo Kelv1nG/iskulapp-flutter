@@ -41,7 +41,9 @@ class AttendanceInfo extends StatelessWidget{
                 Row(
                     children: [
                         Text('Time in: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text(details.timeIn.toString()),
+                        Text( details.timeIn != null
+                                ? '${details.timeIn!.hourOfPeriod.toString().padLeft(2, '0')}:${details.timeIn!.minute.toString().padLeft(2, '0')} ${details.timeIn!.period == DayPeriod.am ? 'AM' : 'PM'}'
+                                : 'No time-in recorded.'),
                     ],
                 ),
 
