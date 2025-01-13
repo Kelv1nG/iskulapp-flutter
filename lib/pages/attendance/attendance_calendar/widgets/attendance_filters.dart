@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:school_erp/enums/button_type.dart';
 import 'package:school_erp/enums/filter_by_type.dart';
+import 'package:school_erp/enums/user_role.dart';
 import 'package:school_erp/models/attendance.dart';
 import 'package:school_erp/models/section.dart';
 import 'package:school_erp/models/student.dart';
-import 'package:school_erp/pages/attendance/attendance_calendar/attendance_calendar_page.dart';
 import 'package:school_erp/pages/attendance/attendance_calendar/widgets/attendance_list.dart';
 import 'package:school_erp/pages/attendance/attendance_calendar/widgets/helpers/attendance_calendar_utils.dart';
 import 'package:school_erp/pages/common_widgets/dropdowns/form_drop_down_list.dart';
@@ -13,7 +13,7 @@ import 'package:school_erp/pages/common_widgets/forms/calendar_range_picker/cust
 import 'package:school_erp/pages/common_widgets/forms/drop_down_form/drop_down_form.dart';
 
 class AttendanceFilters extends StatefulWidget{
-    final Roles role;
+    final UserRole? role;
     final ValueChanged<Student?> changeStudentFilter;
     final void Function(Section) changeSectionFilter;
     final void Function(FilterByType) changeFilterBy;
@@ -61,7 +61,7 @@ class _AttendanceFiltersState extends State<AttendanceFilters> {
     }
 
     void _handleChangeSection(Section? newSection) {
-        if (widget.role != Roles.teacher) return;
+        if (widget.role != UserRole.teacher) return;
         if (_currentSection == newSection) return;
 
         setState(() {
@@ -113,7 +113,7 @@ class _AttendanceFiltersState extends State<AttendanceFilters> {
 
     @override
     Widget build(Object context) {
-        if (widget.role != Roles.teacher) return SizedBox.shrink();
+        if (widget.role != UserRole.teacher) return SizedBox.shrink();
 
         // This can be optimized futher, but will have to
         // separate these dropdowns in to its own statefulwidgets,
