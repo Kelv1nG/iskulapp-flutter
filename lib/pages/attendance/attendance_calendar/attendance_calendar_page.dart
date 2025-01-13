@@ -74,7 +74,7 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
         try {
             setState(() => _loadingStates["isStudentAttendanceLoading"] = true);
 
-            List<Attendance> studentAttendance = await attendanceRepository.getStudentAttendance(1);
+            List<Attendance> studentAttendance = await attendanceRepository.getStudentAttendance(user!.id);
 
             if (studentAttendance.isEmpty) throw Exception("No attendance record.");
 

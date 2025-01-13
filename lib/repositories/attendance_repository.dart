@@ -58,11 +58,11 @@ class AttendanceRepository extends BaseRepository<Attendance>
     }
 
     Future<List<Attendance>> getStudentAttendance(
-        int studentId,
+        String userId,
     ) async {
         var results = await database.execute(
             attendanceOfStudentSql,
-            [studentId],
+            [userId],
         );
 
         if (results.isEmpty) {

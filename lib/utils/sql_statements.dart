@@ -100,10 +100,10 @@ const studentsBySectionSql = """
 """;
 
 const attendanceOfStudentSql = """
-  SELECT
-    *
-  FROM attendances
-  WHERE student_id = ?
+SELECT *
+FROM students
+JOIN attendances ON students.id = attendances.student_id
+WHERE students.user_id = ?
 """;
 
 const assessmentTakersSql = """
