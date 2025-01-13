@@ -94,9 +94,8 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
             setState(() => _loadingStates["isSectionsLoading"] = true);
 
             String teacherId = getTeacherId(context);
-            AuthenticatedUser authUser = getAuthUser(context);
 
-            List<Section> responseSections = await sectionRepository.getTeacherSectionsAll(teacherId: teacherId, academicYearId: authUser.academicYearId);
+            List<Section> responseSections = await sectionRepository.getTeacherSectionsAll(teacherId: teacherId, academicYearId: user!.academicYearId);
 
             if (responseSections.isEmpty) throw Exception("Teacher has no sections handled.");
 
