@@ -6,4 +6,6 @@ const userProfilesTable = Table('user_profiles', [
   Column.text('last_name'),
   Column.text('birth_date'),
   Column.text('gender'),
+], indexes: [
+  Index('user_id', [IndexedColumn('user_id')])
 ]);

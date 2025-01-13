@@ -69,8 +69,8 @@ const studentsAttendanceBySectionSql = """
   FROM attendances
   LEFT JOIN sections ON sections.id = attendances.section_id 
   LEFT JOIN students ON students.id = attendances.student_id
-  LEFT JOIN user_profiles ON user_profiles.user_id = students.user_id
-  WHERE section_id = ?
+  LEFT JOIN user_profiles WHERE user_profiles.user_id = students.user_id
+    AND attendances.section_id = ?
 """;
 
 const studentsAttendanceSummariesSql = """
@@ -83,7 +83,7 @@ const studentsAttendanceSummariesSql = """
     COUNT(CASE WHEN status = 'absent' THEN 1 END) as absent
   FROM attendances
   LEFT JOIN students ON students.id = attendances.student_id
-  LEFT JOIN user_profiles ON user_profiles.user_id = students.user_id
+  LEFT JOIN user_profiles WHERE user_profiles.user_id = students.user_id
   GROUP BY attendances.student_id, user_profiles.first_name, user_profiles.last_name
 """;
 
