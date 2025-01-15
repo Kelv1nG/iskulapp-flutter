@@ -45,8 +45,8 @@ class Features extends StatelessWidget {
         FeatureButton(
           title: 'Attendance',
           icon: Icons.emoji_people_outlined,
-          // target: AttendanceCreateUpdatePage(),
-          target: AttendanceCalendarPage(),
+          target: AttendanceCreateUpdatePage(),
+          //target: AttendanceCalendarPage(),
         ),
         FeatureButton(
           title: 'Billing',
@@ -59,9 +59,7 @@ class Features extends StatelessWidget {
         FeatureButton(
           title: 'Calendar',
           icon: Icons.calendar_month,
-          target: DefaultPage(
-              title: "Attendance", fontColor: AppColors.primaryColor),
-          //target: CalendarAttendancePage(),
+          target: AttendanceCalendarPage(),
         ),
         const FeatureButton(
           title: 'Subject\nSchedule',
