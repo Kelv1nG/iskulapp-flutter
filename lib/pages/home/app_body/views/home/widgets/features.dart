@@ -20,6 +20,16 @@ class Features extends StatelessWidget {
 
     const Features({super.key, required this.user});
 
+    String roleOfUser(AuthenticatedUser loggedinUser) {
+        final roleToDisplayName = {
+            UserRole.teacher: UserRole.teacher.displayName,
+            UserRole.student: UserRole.student.displayName,
+            UserRole.parent: UserRole.parent.displayName,
+        };
+
+        return roleToDisplayName[loggedinUser.role] ?? 'Unknown Role';
+    }
+
     @override
     Widget build(BuildContext context) {
         List<FeatureSection> features = [
@@ -60,7 +70,7 @@ class Features extends StatelessWidget {
                 ]),
             FeatureSection(title: 'Time Calendar', features: <FeatureButton>[
                     FeatureButton(
-                        title: 'Calendar',
+                        title: '${roleOfUser(user)} Calendar',
                         icon: Icons.calendar_month,
                         target: AttendanceCalendarPage(),
                     ),
