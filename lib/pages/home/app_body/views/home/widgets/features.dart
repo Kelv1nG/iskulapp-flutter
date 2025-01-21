@@ -43,8 +43,9 @@ class Features extends StatelessWidget {
                         DefaultPage(title: "Learn", fontColor: AppColors.primaryColor),
                         //target: LearnPage(),
                     ),
+                    if (user.role == UserRole.teacher)
                     FeatureButton(
-                        title: 'Attendance',
+                        title: 'Check Attendance',
                         icon: Icons.emoji_people_outlined,
                         target: AttendanceCreateUpdatePage(),
                         //target: AttendanceCalendarPage(),
