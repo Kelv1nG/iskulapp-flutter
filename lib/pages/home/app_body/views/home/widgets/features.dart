@@ -8,6 +8,7 @@ import 'package:school_erp/pages/default_page.dart';
 import 'package:school_erp/pages/events/events_page.dart';
 import 'package:school_erp/pages/learn/learn.dart';
 import 'package:school_erp/pages/leave_application/leave_application_page.dart';
+import 'package:school_erp/pages/sample_sync_check.dart';
 import 'package:school_erp/pages/school_gallery/school_gallery_page.dart';
 import 'package:school_erp/theme/colors.dart';
 import 'package:school_erp/theme/text_styles.dart';
@@ -89,10 +90,9 @@ class Features extends StatelessWidget {
           //target: EventsPage(),
         ),
         FeatureButton(
-          title: 'School Gallery',
+          title: 'TestSync',
           icon: Icons.collections,
-          target: DefaultPage(
-              title: "School Gallery", fontColor: AppColors.primaryColor),
+          target: SampleSyncPage(),
         ),
         //target: SchoolGalleryPage(),
       ]),
