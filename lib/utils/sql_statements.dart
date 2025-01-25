@@ -20,8 +20,8 @@ const teacherAssessmentsSql = """
 
 const teacherSubjectsSql = """
   SELECT 
-  	subject_years.*, 
-	subjects.name AS subject_name
+   subject_years.*, 
+ subjects.name AS subject_name
   FROM teacher_subjects
   LEFT JOIN subject_years ON subject_years.id = teacher_subjects.subject_year_id
   LEFT JOIN subjects ON subjects.id = subject_years.subject_id
@@ -126,4 +126,15 @@ const subjectYearSql = """
   SELECT *
   FROM subject_years
   WHERE id = ?
+""";
+
+const sectionOfStudentSql = """
+  SELECT 
+    sections.*,
+    grade_levels.name AS grade_level_name
+  FROM students
+  JOIN student_sections ON students.id = student_sections.student_id
+  JOIN sections ON student_sections.section_id = sections.id
+  JOIN grade_levels ON sections.id = grade_levels.id
+  WHERE students.user_id = ?
 """;

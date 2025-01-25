@@ -4,38 +4,53 @@ import 'package:school_erp/repositories/base_repository/read_only_repository.dar
 import 'package:school_erp/utils/sql_statements.dart';
 
 class SectionRepository extends ReadOnlyRepository<Section> {
-  SectionRepository({super.database})
-      : super(table: sectionsTable, fromRow: Section.fromRow);
+    SectionRepository({super.database})
+        : super(table: sectionsTable, fromRow: Section.fromRow);
 
-  Future<List<Section>> getTeacherSectionsBySubject({
-    required String teacherId,
-    required String subjectYearId,
-  }) async {
-    final results = await database.execute(
-      teacherSectionsBySubjectSql,
-      [teacherId, subjectYearId],
-    );
+    Future<List<Section>> getTeacherSectionsBySubject({
+        required String teacherId,
+        required String subjectYearId,
+    }) async {
+        final results = await database.execute(
+            teacherSectionsBySubjectSql,
+            [teacherId, subjectYearId],
+        );
 
-    if (results.isEmpty) {
-      return [];
+        if (results.isEmpty) {
+            return [];
+        }
+
+        return results.map(Section.fromRow).toList(growable: false);
     }
 
-    return results.map(Section.fromRow).toList(growable: false);
-  }
+    Future<List<Section>> getTeacherSectionsAll({
+        required String teacherId,
+        required String academicYearId,
+    }) async {
+        final results = await database.execute(
+            teacherSectionsSql,
+            [teacherId, academicYearId],
+        );
 
-  Future<List<Section>> getTeacherSectionsAll({
-    required String teacherId,
-    required String academicYearId,
-  }) async {
-    final results = await database.execute(
-      teacherSectionsSql,
-      [teacherId, academicYearId],
-    );
+        if (results.isEmpty) {
+            return [];
+        }
 
-    if (results.isEmpty) {
-      return [];
+        return results.map(Section.fromRow).toList(growable: false);
     }
 
-    return results.map(Section.fromRow).toList(growable: false);
-  }
+    Future<List<Section>> getSectionOfStudent({
+        required String userId
+    }) async {
+        final results = await database.execute(
+            sectionOfStudentSql,
+            [userId]
+        );
+
+        if (results.isEmpty) {
+            return [];
+        }
+
+        return results.map(Section.fromRow).toList(growable: false);
+    }
 }
