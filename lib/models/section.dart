@@ -7,6 +7,7 @@ class Section implements EntityDisplayData{
     final String id;
     final String academicYearId;
     final String gradeLevelId;
+    final String gradeLevelName;
     final String? advisorId;
     final String name;
 
@@ -17,6 +18,7 @@ class Section implements EntityDisplayData{
         required this.id,
         required this.academicYearId,
         required this.gradeLevelId,
+        required this.gradeLevelName,
         this.advisorId,
         required this.name,
         this.gradeLevelName
