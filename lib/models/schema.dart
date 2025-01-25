@@ -7,6 +7,7 @@ Schema schema = const Schema(
     assessmentTakersTable,
     attendancesTable,
     academicYearsTable,
+    gradeLevelsTable,
     guardiansTable,
     guardianStudentTable,
     sectionsTable,
