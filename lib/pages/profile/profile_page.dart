@@ -32,14 +32,14 @@ class _ProfilePageState extends State<ProfilePage> {
     final List<ProfileItemData> profileItemDataList = [
         ProfileItemData('Adhar No.', '1234 4325 4567 1234'),
         ProfileItemData('Academic Year', '2020 - 2021'),
-        ProfileItemData('Admission Class', 'VI', CupertinoIcons.lock_fill),
-        ProfileItemData('Old Admission No.', 'T00221', CupertinoIcons.lock_fill),
+        ProfileItemData('Grade Level', 'VI', CupertinoIcons.lock_fill),
+        ProfileItemData('Section', 'T00221', CupertinoIcons.lock_fill),
         ProfileItemData('Date of Admission', '01 Apr 2018', CupertinoIcons.lock_fill),
         ProfileItemData('Date of Birth', '22 July 1996', CupertinoIcons.lock_fill),
-        ProfileItemData('Parent Mail ID', 'parentboth84@gmail.com', CupertinoIcons.lock_fill, 370),
+        ProfileItemData('Parent Email', 'parentboth84@gmail.com', CupertinoIcons.lock_fill, 370),
         ProfileItemData('Mother Name', 'Monica Larson', CupertinoIcons.lock_fill, 370),
         ProfileItemData('Father Name', 'Bernard Taylor', CupertinoIcons.lock_fill, 370),
-        ProfileItemData('Permanent Add', 'Karol Bagh, Delhi', CupertinoIcons.lock_fill, 370),
+        ProfileItemData('Permanent Address', 'Karol Bagh, Delhi', CupertinoIcons.lock_fill, 370),
     ];
 
     @override
