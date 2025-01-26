@@ -161,3 +161,11 @@ const academicYearsOfStudent = """
   WHERE academic_years.id = ?
   LIMIT 1;
 """;
+
+// Student
+const studentSql = """
+  SELECT students.*
+  FROM students
+  WHERE students.user_id = ?
+  LIMIT 1;
+""";
