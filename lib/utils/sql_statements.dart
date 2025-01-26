@@ -153,3 +153,11 @@ const guardiansOfStudentSql = """
   JOIN user_profiles ON user_profiles.user_id = guardians.user_id
   WHERE students.user_id = ?
 """;
+
+// Academic Year
+const academicYearsOfStudent = """
+  SELECT academic_years.*
+  FROM academic_years
+  WHERE academic_years.id = ?
+  LIMIT 1;
+""";
