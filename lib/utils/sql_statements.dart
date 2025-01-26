@@ -138,3 +138,18 @@ const sectionOfStudentSql = """
   JOIN grade_levels ON sections.id = grade_levels.id
   WHERE students.user_id = ?
 """;
+
+// Guadrian
+const guardiansOfStudentSql = """
+  SELECT
+    guardians.id,
+    user_profiles.user_id,
+    user_profiles.first_name,
+    user_profiles.last_name,
+    user_profiles.gender
+  FROM students
+  JOIN guardian_student ON students.id = guardian_student.student_id
+  JOIN guardians ON guardian_student.guardian_id = guardians.id
+  JOIN user_profiles ON user_profiles.user_id = guardians.user_id
+  WHERE students.user_id = ?
+""";
