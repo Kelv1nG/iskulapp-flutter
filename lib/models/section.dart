@@ -7,17 +7,20 @@ class Section implements EntityDisplayData{
     final String id;
     final String academicYearId;
     final String gradeLevelId;
-    final String gradeLevelName;
     final String? advisorId;
     final String name;
+
+    // Fields from relationships, not in Section table (For a lack of a better description or expression)
+    final String? gradeLevelName;
 
     Section({
         required this.id,
         required this.academicYearId,
         required this.gradeLevelId,
-        required this.gradeLevelName,
         this.advisorId,
         required this.name,
+        this.gradeLevelName
+
     });
 
     factory Section.fromRow(sqlite.Row row) {
