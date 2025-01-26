@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:school_erp/enums/user_role.dart';
 import 'package:school_erp/features/auth/auth.dart';
 import 'package:school_erp/features/auth/utils.dart';
+import 'package:school_erp/models/guardian.dart';
 import 'package:school_erp/models/section.dart';
 import 'package:school_erp/pages/common_widgets/default_layout.dart';
 import 'package:school_erp/pages/profile/helpers/classes/profile_item_data.dart';
 import 'package:school_erp/pages/profile/widgets/profile_details_list.dart';
 import 'package:school_erp/pages/profile/widgets/profile_header.dart';
+import 'package:school_erp/repositories/guardian_repository.dart';
 import 'package:school_erp/repositories/sections_repository.dart';
 import 'package:school_erp/utils/extensions/string_extension.dart';
 
@@ -20,6 +22,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
     late final AuthenticatedUser user;
     late final Section section;
+    late final List<Guardian> guardians;
 
     @override
     void initState() {
@@ -35,12 +38,18 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     void _getStudentProfileDetails() async {
+
         SectionRepository sectionRepository = SectionRepository();
+        GuardianRepository guardianRepository = GuardianRepository();
         List<Section> sectionOfStudent = await sectionRepository.getSectionOfStudent(userId: user.id);
+        List<Guardian> guardiansOfStudent = await guardianRepository.getGuardiansOfStudent(userId: user.id);
 
         // Get first row here instead of doing it in getSectionOfStudent.
         // getSectionOfStudent may also be modified to query for past sections of student
-        setState(() => section = sectionOfStudent[0]);
+        setState(() {
+                section = sectionOfStudent[0];
+                guardians = guardiansOfStudent;
+            });
     }
 
     @override
