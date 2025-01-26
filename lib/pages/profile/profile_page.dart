@@ -61,11 +61,20 @@ class _ProfilePageState extends State<ProfilePage> {
             ProfileItemData('Section', section.displayName, CupertinoIcons.lock_fill),
             ProfileItemData('Date of Admission', '01 Apr 2018', CupertinoIcons.lock_fill),
             ProfileItemData('Date of Birth', '22 July 1996', CupertinoIcons.lock_fill),
-            ProfileItemData('Parent Email', 'parentboth84@gmail.com', CupertinoIcons.lock_fill, 370),
-            ProfileItemData('Mother Name', 'Monica Larson', CupertinoIcons.lock_fill, 370),
-            ProfileItemData('Father Name', 'Bernard Taylor', CupertinoIcons.lock_fill, 370),
             ProfileItemData('Permanent Address', 'Karol Bagh, Delhi', CupertinoIcons.lock_fill, 370),
+            ProfileItemData('Guardian Email', 'parentboth84@gmail.com', CupertinoIcons.lock_fill, 370),
         ];
+
+        for (int i = 0; i < guardians.length; i++) {
+            profileItemDataList.add(
+                ProfileItemData(
+                    'Guardian ${i + 1}', 
+                    guardians[i].displayName, 
+                    CupertinoIcons.lock_fill, 
+                    370
+                )
+            );
+        }
 
         return DefaultLayout(
             title: 'My Profile',
