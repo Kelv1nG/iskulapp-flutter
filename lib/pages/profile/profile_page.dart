@@ -57,7 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
         final List<ProfileItemData> profileItemDataList = [
             ProfileItemData('Adhar No.', '1234 4325 4567 1234'),
             ProfileItemData('Academic Year', '2020 - 2021'),
-            ProfileItemData('Grade Level', section.gradeLevelName.capitalize(), CupertinoIcons.lock_fill),
+            ProfileItemData('Grade Level', section.gradeLevelName!.capitalize(), CupertinoIcons.lock_fill),
             ProfileItemData('Section', section.displayName, CupertinoIcons.lock_fill),
             ProfileItemData('Date of Admission', '01 Apr 2018', CupertinoIcons.lock_fill),
             ProfileItemData('Date of Birth', '22 July 1996', CupertinoIcons.lock_fill),
