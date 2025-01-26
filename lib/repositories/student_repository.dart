@@ -4,21 +4,32 @@ import 'package:school_erp/repositories/base_repository/read_only_repository.dar
 import 'package:school_erp/utils/sql_statements.dart';
 
 class StudentRepository extends ReadOnlyRepository<Student> {
-  StudentRepository({super.database})
-      : super(table: studentsTable, fromRow: Student.fromRow);
+    StudentRepository({super.database})
+        : super(table: studentsTable, fromRow: Student.fromRow);
 
-  Future<List<Student>> getStudentsBySection(
-    String sectionId,
-  ) async {
-    var results = await database.execute(
-      studentsBySectionSql,
-      [sectionId],
-    );
+    Future<List<Student>> getStudentsBySection(
+        String sectionId,
+    ) async {
+        var results = await database.execute(
+            studentsBySectionSql,
+            [sectionId],
+        );
 
-    if (results.isEmpty) {
-      return [];
+        if (results.isEmpty) {
+            return [];
+        }
+
+        return results.map(Student.fromRow).toList(growable: false);
     }
 
-    return results.map(Student.fromRow).toList(growable: false);
-  }
+    Future<Student> getStudent({
+        required String userId
+    }) async {
+        var result = await database.execute(
+            studentSql,
+            [userId]
+        );
+
+        return Student.fromRow(result.first);
+    }
 }
