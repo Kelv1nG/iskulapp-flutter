@@ -70,7 +70,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ProfileItemData('Academic Year', '${academicYear.start} - ${academicYear.end}'),
             ProfileItemData('Grade Level', section.gradeLevelName!.capitalize(), CupertinoIcons.lock_fill),
             ProfileItemData('Section', section.displayName, CupertinoIcons.lock_fill),
-            ProfileItemData('Date of Admission', '01 Apr 2018', CupertinoIcons.lock_fill),
             ProfileItemData('Date of Birth', '22 July 1996', CupertinoIcons.lock_fill),
             ProfileItemData('Permanent Address', 'Karol Bagh, Delhi', CupertinoIcons.lock_fill, 370),
             ProfileItemData('Guardian Email', 'parentboth84@gmail.com', CupertinoIcons.lock_fill, 370),
