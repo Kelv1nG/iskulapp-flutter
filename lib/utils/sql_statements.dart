@@ -164,8 +164,29 @@ const academicYearsOfStudent = """
 
 // Student
 const studentSql = """
-  SELECT students.*
+  SELECT 
+    user_profiles.user_id,
+    user_profiles.first_name,
+    user_profiles.last_name,
+    user_profiles.birth_date,
+    user_profiles.gender,
+    students.id,
+    students.student_no,
+    grade_levels.name AS grade_level_name,
+    grade_levels.id AS grade_level_id,
+    sections.name AS section_name,
+    sections.id AS section_id,
+    academic_years.name AS academic_year_name,
+    academic_years.start AS academic_year_start,
+    academic_years.end AS academic_year_end,
+    academic_years.school_id AS school_id
   FROM students
+  JOIN user_profiles ON students.user_id = user_profiles.user_id
+  JOIN student_sections ON students.id = student_sections.student_id
+  JOIN sections ON student_sections.section_id = sections.id
+  JOIN grade_levels ON sections.id = grade_levels.id
+  JOIN academic_years ON academic_years.id = academic_years.id
   WHERE students.user_id = ?
+    AND academic_years.id = ?
   LIMIT 1;
 """;

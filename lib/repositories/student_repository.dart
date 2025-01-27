@@ -23,11 +23,12 @@ class StudentRepository extends ReadOnlyRepository<Student> {
     }
 
     Future<Student> getStudent({
-        required String userId
+        required String userId,
+        required String academicYearId
     }) async {
         var result = await database.execute(
             studentSql,
-            [userId]
+            [userId, academicYearId]
         );
 
         return Student.fromRow(result.first);
