@@ -18,6 +18,7 @@ Schema schema = const Schema(
     teachersTable,
     teacherYearTable,
     teacherSubjectsTable,
+    usersTable,
     userProfilesTable,
   ],
 );

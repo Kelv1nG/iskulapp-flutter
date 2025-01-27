@@ -13,4 +13,5 @@ export 'subject_years_table.dart';
 export 'teachers_table.dart';
 export 'teacher_year_table.dart';
 export 'teacher_subjects_table.dart';
+export 'users_table.dart';
 export 'user_profiles_table.dart';
