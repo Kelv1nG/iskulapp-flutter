@@ -76,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ProfileItemData('Section', student!.sectionName!.capitalize(), CupertinoIcons.lock_fill),
                     ProfileItemData('Date of Birth', DateFormat('dd MMM, yyyy').format(student!.birthDate!), CupertinoIcons.lock_fill),
                     ProfileItemData('Permanent Address', 'Karol Bagh, Delhi', CupertinoIcons.lock_fill, 370),
-                    ProfileItemData('Guardian Email', 'parentboth84@gmail.com', CupertinoIcons.lock_fill, 370),
+                    ProfileItemData('Guardian Email', guardians![0].email!, CupertinoIcons.lock_fill, 370),
                 ];
 
         if (!_isLoading) {for (int i = 0; i < guardians!.length; i++) {

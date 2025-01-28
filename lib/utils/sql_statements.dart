@@ -146,11 +146,13 @@ const guardiansOfStudentSql = """
     user_profiles.user_id,
     user_profiles.first_name,
     user_profiles.last_name,
-    user_profiles.gender
+    user_profiles.gender,
+    users.email
   FROM students
   JOIN guardian_student ON students.id = guardian_student.student_id
   JOIN guardians ON guardian_student.guardian_id = guardians.id
   JOIN user_profiles ON user_profiles.user_id = guardians.user_id
+  JOIN users ON user_profiles.user_id = users.id
   WHERE students.user_id = ?
 """;
 
