@@ -10,6 +10,7 @@ class Guardian implements EntityDisplayData{
     final String? firstName;
     final String? middleName;
     final String? lastName;
+    final String? email;
 
     Guardian({
         required this.id,
@@ -17,6 +18,7 @@ class Guardian implements EntityDisplayData{
         this.firstName,
         this.middleName,
         this.lastName,
+        this.email
     });
 
     factory Guardian.fromRow(sqlite.Row row) => Guardian(
@@ -25,6 +27,7 @@ class Guardian implements EntityDisplayData{
         firstName: row['first_name'],
         middleName: row['middle_name'],
         lastName: row['last_name'],
+        email: row['email']
     );
 
     @override
