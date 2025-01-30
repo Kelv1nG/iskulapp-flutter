@@ -40,12 +40,13 @@ class Features extends StatelessWidget {
         FeatureButton(
           title: 'Billing',
           icon: Icons.payment_outlined,
-          route: '/default-page?title=Billing',
+          route: '/billing',
+          visible: RoleRoutes.canAccess(user.role, '/billing'),
         ),
       ]),
       FeatureSection(title: 'Time Calendar', features: <FeatureButton>[
         FeatureButton(
-          title: 'Calendar',
+          title: '${user.role.displayName} Calendar',
           icon: Icons.calendar_month,
           route: '/attendance-calendar',
         ),
