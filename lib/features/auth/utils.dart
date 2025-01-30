@@ -13,7 +13,7 @@ AuthenticatedUser getAuthUser(BuildContext context) {
 String getTeacherId(BuildContext context) {
   final authUser = getAuthUser(context);
   if (authUser.loginType != 'teacher') {
-    throw Exception('Only teachers can create assignments');
+    throw Exception('User is not a teacher');
   }
 
   return authUser.loginId;
