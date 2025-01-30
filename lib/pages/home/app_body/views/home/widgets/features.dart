@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:school_erp/features/transition/clean_slide_transition.dart';
-import 'package:school_erp/pages/assignment/assignment_list_page/assignment_list_page.dart';
-import 'package:school_erp/pages/attendace/attedance_create_update/attendance_create_update_page.dart';
-import 'package:school_erp/pages/attendance/attendance_calendar/attendance_calendar_page.dart';
-import 'package:school_erp/pages/calendar/calendar_attendance_page.dart';
-import 'package:school_erp/pages/default_page.dart';
-import 'package:school_erp/pages/events/events_page.dart';
-import 'package:school_erp/pages/learn/learn.dart';
-import 'package:school_erp/pages/leave_application/leave_application_page.dart';
-import 'package:school_erp/pages/school_gallery/school_gallery_page.dart';
+import 'package:school_erp/config/routes/role_routes.dart';
 import 'package:school_erp/theme/colors.dart';
 import 'package:school_erp/theme/text_styles.dart';
 import 'package:school_erp/features/auth/auth_repository/schemas/user.dart';
-import 'package:school_erp/pages/timetable/timetable_page.dart';
+import 'package:go_router/go_router.dart';
 
 class Features extends StatelessWidget {
   final AuthenticatedUser user;
@@ -22,59 +13,52 @@ class Features extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<FeatureSection> features = [
-      const FeatureSection(title: 'Core', features: <FeatureButton>[
+      FeatureSection(title: 'Core', features: <FeatureButton>[
         FeatureButton(
           title: 'Quiz',
           icon: Icons.edit_note_outlined,
-          target: DefaultPage(title: "Quiz", fontColor: AppColors.primaryColor),
+          route: '/default-page?title=Quiz',
         ),
         FeatureButton(
           title: 'Homework',
           icon: Icons.assignment,
-          target: DefaultPage(
-              title: "Assignment", fontColor: AppColors.primaryColor),
+          route: '/default-page?title=Assignment',
           //target: AssignmentListPage(),
         ),
         FeatureButton(
           title: 'Learn',
           icon: Icons.local_library_outlined,
-          target:
-              DefaultPage(title: "Learn", fontColor: AppColors.primaryColor),
+          route: '/default-page?title=Learn',
           //target: LearnPage(),
         ),
         FeatureButton(
           title: 'Attendance',
           icon: Icons.emoji_people_outlined,
-          // target: AttendanceCreateUpdatePage(),
-          target: AttendanceCalendarPage(),
+          route: '/attendance-check',
+          visible: RoleRoutes.canAccess(user.role, '/attendance-check'),
         ),
         FeatureButton(
           title: 'Billing',
           icon: Icons.payment_outlined,
-          target:
-              DefaultPage(title: "Billing", fontColor: AppColors.primaryColor),
+          route: '/default-page?title=Billing',
         ),
       ]),
       FeatureSection(title: 'Time Calendar', features: <FeatureButton>[
         FeatureButton(
           title: 'Calendar',
           icon: Icons.calendar_month,
-          target: DefaultPage(
-              title: "Attendance", fontColor: AppColors.primaryColor),
-          //target: CalendarAttendancePage(),
+          route: '/attendance-calendar',
         ),
         const FeatureButton(
           title: 'Subject\nSchedule',
           icon: Icons.event_note,
-          target: DefaultPage(
-              title: "Time Table", fontColor: AppColors.primaryColor),
+          route: '/default-page?title=TimeTable',
           //target: TimeTablePage(),
         ),
         const FeatureButton(
           title: 'Apply Absents',
           icon: Icons.edit_calendar,
-          target: DefaultPage(
-              title: "Leave Application", fontColor: AppColors.primaryColor),
+          route: '/default-page?title=LeaveApplication',
           //target: LeaveApplicationPage(),
         ),
       ]),
@@ -82,17 +66,13 @@ class Features extends StatelessWidget {
         FeatureButton(
           title: 'Events',
           icon: Icons.celebration,
-          target: DefaultPage(
-            title: "Events",
-            fontColor: AppColors.primaryColor,
-          ),
+          route: '/default-page?title=Events',
           //target: EventsPage(),
         ),
         FeatureButton(
           title: 'School Gallery',
           icon: Icons.collections,
-          target: DefaultPage(
-              title: "School Gallery", fontColor: AppColors.primaryColor),
+          route: '/default-page?title=SchoolGallery',
         ),
         //target: SchoolGalleryPage(),
       ]),
@@ -127,13 +107,16 @@ class Features extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 6, horizontal: (14)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: feature.features.map((feature) {
+              children: feature.features.where((f) => f.visible).map((feature) {
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      createSlideRoute(feature.target),
-                    );
+                    if (RoleRoutes.canAccess(user.role, feature.route)) {
+                      context.push(feature.route);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Access Denied')),
+                      );
+                    }
                   },
                   child: Column(
                     children: [
@@ -157,7 +140,9 @@ class Features extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
                           style: const TextStyle(
-                              color: AppColors.whiteColor, fontSize: 14),
+                            color: AppColors.whiteColor,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                     ],
@@ -182,8 +167,12 @@ class FeatureSection {
 class FeatureButton {
   final String title;
   final IconData icon;
-  final Widget target;
+  final String route;
+  final bool visible;
 
   const FeatureButton(
-      {required this.title, required this.icon, required this.target});
+      {required this.title,
+      required this.icon,
+      required this.route,
+      this.visible = true});
 }
