@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:school_erp/features/attendance/cubit/attendance_check_cubit.dart';
 import 'package:school_erp/features/attendance/cubit/attendance_check_state.dart';
 import 'package:school_erp/features/auth/utils.dart';
-import 'package:school_erp/pages/attendace/attedance_create_update/widgets/time_in_modal.dart';
+import 'package:school_erp/pages/attendance/attendance_create_update/widgets/time_in_modal.dart';
 import 'package:school_erp/utils/time_utils/formatter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
