@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:school_erp/enums/user_role.dart';
 import 'package:school_erp/features/transition/clean_slide_transition.dart';
+import 'package:school_erp/pages/assignment/assignment_answers/assignment_answers_page.dart';
 import 'package:school_erp/pages/assignment/assignment_list_page/assignment_list_page.dart';
 import 'package:school_erp/pages/attendace/attedance_create_update/attendance_create_update_page.dart';
 import 'package:school_erp/pages/attendance/attendance_calendar/attendance_calendar_page.dart';
@@ -19,16 +20,6 @@ class Features extends StatelessWidget {
     final AuthenticatedUser user;
 
     const Features({super.key, required this.user});
-
-    String roleOfUser(AuthenticatedUser loggedinUser) {
-        final roleToDisplayName = {
-            UserRole.teacher: UserRole.teacher.displayName,
-            UserRole.student: UserRole.student.displayName,
-            UserRole.parent: UserRole.parent.displayName,
-        };
-
-        return roleToDisplayName[loggedinUser.role] ?? 'Unknown Role';
-    }
 
     @override
     Widget build(BuildContext context) {
@@ -70,7 +61,7 @@ class Features extends StatelessWidget {
                 ]),
             FeatureSection(title: 'Time Calendar', features: <FeatureButton>[
                     FeatureButton(
-                        title: '${roleOfUser(user)} Calendar',
+                        title: '${user.role.displayName} Calendar',
                         icon: Icons.calendar_month,
                         target: AttendanceCalendarPage(),
                     ),
