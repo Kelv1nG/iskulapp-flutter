@@ -11,7 +11,9 @@ class RoleRoutes {
       '/attendance-calendar',
       '/default-page',
     ],
-    UserRole.parent: [],
+    UserRole.parent: [
+      '/billing',
+    ],
   };
 
   static bool canAccess(UserRole role, String route) {

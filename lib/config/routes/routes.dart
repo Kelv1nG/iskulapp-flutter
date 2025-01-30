@@ -73,6 +73,15 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
+      name: 'billing',
+      path: '/billing',
+      pageBuilder: (context, state) {
+        return createSlideRoutePage(
+          DefaultPage(title: 'Billing'),
+        );
+      },
+    ),
+    GoRoute(
       name: 'default-page',
       path: '/default-page',
       pageBuilder: (context, state) {
