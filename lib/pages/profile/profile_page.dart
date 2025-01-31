@@ -64,6 +64,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
     @override
     Widget build(BuildContext context) {
+
+        print(student!.address);
         final List<ProfileItemData> profileItemDataList = 
             // Show a blank list if _isLoading to avoid bugs, and errors caused by displaying
             // data without actual data. 
@@ -72,10 +74,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 : [
                     ProfileItemData('Student No.', student!.studentNo),
                     ProfileItemData('Academic Year', '${student!.academicYearStart} - ${student!.academicYearEnd}'),
-                    ProfileItemData('Grade Level', student!.gradeLevelName!.capitalize(), CupertinoIcons.lock_fill),
-                    ProfileItemData('Section', student!.sectionName!.capitalize(), CupertinoIcons.lock_fill),
+                    ProfileItemData('Grade Level', student!.gradeLevelName!.title(), CupertinoIcons.lock_fill),
+                    ProfileItemData('Section', student!.sectionName!.title(), CupertinoIcons.lock_fill),
                     ProfileItemData('Date of Birth', DateFormat('dd MMM, yyyy').format(student!.birthDate!), CupertinoIcons.lock_fill),
-                    ProfileItemData('Permanent Address', 'Karol Bagh, Delhi', CupertinoIcons.lock_fill, 370),
+                    ProfileItemData('Permanent Address', student!.address!.title(), CupertinoIcons.lock_fill, 370),
                     ProfileItemData('Guardian Email', guardians![0].email!, CupertinoIcons.lock_fill, 370),
                 ];
 

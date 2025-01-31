@@ -172,6 +172,7 @@ const studentSql = """
     user_profiles.last_name,
     user_profiles.birth_date,
     user_profiles.gender,
+    user_profiles.address,
     students.id,
     students.student_no,
     grade_levels.name AS grade_level_name,

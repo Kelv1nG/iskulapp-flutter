@@ -21,6 +21,7 @@ class Student implements EntityDisplayData{
     final int? academicYearEnd;
     final String? schoolId;
     final DateTime? birthDate;
+    final String? address;
 
     Student({
         required this.id,
@@ -38,7 +39,8 @@ class Student implements EntityDisplayData{
         this.academicYearStart,
         this.academicYearEnd,
         this.schoolId,
-        this.birthDate
+        this.birthDate,
+        this.address,
     });
 
     factory Student.fromRow(sqlite.Row row) => Student(
@@ -58,7 +60,7 @@ class Student implements EntityDisplayData{
         academicYearEnd: DateTime.parse(row['academic_year_end']).year,
         schoolId: row['school_id'],
         birthDate: DateTime.parse(row['birth_date']),
-
+        address: row['address'],
     );
 
     @override
