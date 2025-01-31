@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:school_erp/enums/user_role.dart';
 import 'package:school_erp/features/auth/auth.dart';
 import 'package:school_erp/features/transition/clean_slide_transition.dart';
 import 'package:school_erp/pages/attendance/attendance_calendar/attendance_calendar_page.dart';
@@ -8,6 +9,8 @@ import 'package:school_erp/pages/attendance/attendance_create_update/attendance_
 import 'package:school_erp/pages/default_page.dart';
 import 'package:school_erp/pages/home/home_page.dart';
 import 'package:school_erp/pages/login/login_page.dart';
+import 'package:school_erp/routes/middleware.dart';
+import 'package:school_erp/routes/middleware_route.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -58,12 +61,15 @@ final router = GoRouter(
       path: '/login',
       builder: (context, state) => const LoginPage(),
     ),
-    GoRoute(
+    middlewareRoute(
       name: 'attendance-check',
       path: '/attendance-check',
       pageBuilder: (context, state) => createSlideRoutePage(
         AttendanceCreateUpdatePage(),
       ),
+      middleware: [
+        roleMiddleware([UserRole.teacher]),
+      ],
     ),
     GoRoute(
       name: 'attendance-calendar',
@@ -72,7 +78,7 @@ final router = GoRouter(
         AttendanceCalendarPage(),
       ),
     ),
-    GoRoute(
+    middlewareRoute(
       name: 'billing',
       path: '/billing',
       pageBuilder: (context, state) {
@@ -80,6 +86,9 @@ final router = GoRouter(
           DefaultPage(title: 'Billing'),
         );
       },
+      middleware: [
+        roleMiddleware([UserRole.parent]),
+      ],
     ),
     GoRoute(
       name: 'default-page',
