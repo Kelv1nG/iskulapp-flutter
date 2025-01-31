@@ -4,6 +4,6 @@ extension StringExtension on String {
     }
 
     String title() {
-        return split('_').map((word) => word.capitalize()).join(' ');
+        return split(RegExp(r'[_\s]')).map((word) => word.capitalize()).join(' ');
     }
 }
