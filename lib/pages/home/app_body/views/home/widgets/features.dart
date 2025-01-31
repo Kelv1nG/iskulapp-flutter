@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:school_erp/config/routes/role_routes.dart';
+import 'package:school_erp/enums/user_role.dart';
 import 'package:school_erp/theme/colors.dart';
 import 'package:school_erp/theme/text_styles.dart';
 import 'package:school_erp/features/auth/auth_repository/schemas/user.dart';
@@ -35,13 +35,13 @@ class Features extends StatelessWidget {
           title: 'Attendance',
           icon: Icons.emoji_people_outlined,
           route: '/attendance-check',
-          visible: RoleRoutes.canAccess(user.role, '/attendance-check'),
+          visible: UserRole.teacher == user.role,
         ),
         FeatureButton(
           title: 'Billing',
           icon: Icons.payment_outlined,
           route: '/billing',
-          visible: RoleRoutes.canAccess(user.role, '/billing'),
+          visible: UserRole.parent == user.role,
         ),
       ]),
       FeatureSection(title: 'Time Calendar', features: <FeatureButton>[
@@ -111,13 +111,7 @@ class Features extends StatelessWidget {
               children: feature.features.where((f) => f.visible).map((feature) {
                 return GestureDetector(
                   onTap: () {
-                    if (RoleRoutes.canAccess(user.role, feature.route)) {
-                      context.push(feature.route);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Access Denied')),
-                      );
-                    }
+                    context.push(feature.route);
                   },
                   child: Column(
                     children: [
