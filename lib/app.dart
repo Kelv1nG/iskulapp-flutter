@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:school_erp/config/routes/routes.dart';
 import 'package:school_erp/features/auth/auth.dart';
+import 'package:school_erp/routes/routes.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

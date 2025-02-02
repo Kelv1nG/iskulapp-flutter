@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:school_erp/config/routes/routes.dart';
+import 'package:school_erp/routes/routes.dart';
 import 'package:school_erp/features/transition/clean_slide_transition.dart';
 import 'package:school_erp/pages/common_widgets/app_bar_widgets/sql_console.dart';
 import 'package:school_erp/theme/text_styles.dart';
