@@ -55,6 +55,12 @@ const teacherSectionsSql = """
     AND academic_years.id = ?
 """;
 
+const teacherSql = """
+    SELECT teachers.*
+    FROM teachers
+    WHERE teachers.user_id = ?
+""";
+
 const studentsAttendanceByDateAndSectionSql = """
   SELECT *
   FROM attendances
