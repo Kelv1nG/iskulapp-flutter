@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:school_erp/features/powersync/db.dart';
+import 'package:school_erp/features/powersync/sync_manager.dart';
 import '../auth_repository/auth_repository.dart';
 import '../auth_service.dart';
 import 'auth_state.dart';
@@ -36,7 +37,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final result = await authService.login(event.email, event.password);
 
     if (result is AuthRequestSuccess) {
-      openDatabase(); // connect powersync db if user logs in
+      await openDatabase(); // connect powersync db if user logs in
+      syncStatusManager.initialize();
       emit(AuthState.authenticated(result.user, result.accessToken));
     } else if (result is AuthRequestFailure) {
       emit(AuthState.failure(result.statusCode, result.message));
@@ -48,6 +50,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(const AuthState.loading());
+    syncStatusManager.dispose();
     await authService.logout();
 
     emit(const AuthState.unauthenticated());
