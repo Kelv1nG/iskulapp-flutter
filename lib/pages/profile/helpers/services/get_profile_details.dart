@@ -19,9 +19,11 @@ class GetProfileDetails {
         };
     }
 
-    static Future<Teacher> forTeacher(userId) async {
+    static Future<Map<String, dynamic>> forTeacher(userId) async {
         TeacherRepository teacherRepository = TeacherRepository();
         Teacher teacherDetails = await teacherRepository.getTeacher(userId: userId);
-        return teacherDetails;
+        return {
+            "teacherDetails": teacherDetails
+        };
     }
 }

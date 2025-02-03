@@ -48,19 +48,19 @@ class _ProfilePageState extends State<ProfilePage> {
             setState(() => _isLoading = true);
 
             if (user?.role == UserRole.student) {
-                Map<String, dynamic> getProfileDetails = await GetProfileDetails.forStudent(user!.id, user!.academicYearId);
+                Map<String, dynamic> profileDetails = await GetProfileDetails.forStudent(user!.id, user!.academicYearId);
 
                 return setState(() {
-                        guardians = getProfileDetails["guardiansOfStudent"];
-                        student = getProfileDetails["studentDetails"];
+                        guardians = profileDetails["guardiansOfStudent"];
+                        student = profileDetails["studentDetails"];
                     });
 
             }
 
             if (user?.role == UserRole.teacher) {
-                Teacher getProfileDetails = await GetProfileDetails.forTeacher(user!.id);
+                Map<String, dynamic> profileDetails = await GetProfileDetails.forTeacher(user!.id);
 
-                return setState(() => teacher = getProfileDetails);
+                return setState(() => teacher = profileDetails["teacherDetails"]);
             }
 
         } catch (e) {
