@@ -6,6 +6,7 @@ import 'package:school_erp/features/auth/utils.dart';
 import 'package:school_erp/models/academic_year.dart';
 import 'package:school_erp/models/guardian.dart';
 import 'package:school_erp/models/student.dart';
+import 'package:school_erp/models/teacher.dart';
 import 'package:school_erp/pages/common_widgets/animation_widgets/loading_overlay.dart';
 import 'package:school_erp/pages/common_widgets/default_layout.dart';
 import 'package:school_erp/pages/profile/helpers/classes/profile_item_data.dart';
@@ -27,6 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
     List<Guardian>? guardians;
     AcademicYear? academicYear;
     Student? student;
+    Teacher? teacher;
     bool _isLoading = true;
 
     @override
@@ -64,9 +66,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
     @override
     Widget build(BuildContext context) {
-
-        print(student!.address);
-        final List<ProfileItemData> profileItemDataList = 
+        // START OF STUDENT DETAILS -------------------------------------------------
+        final List<ProfileItemData> studentItemDataList = 
             // Show a blank list if _isLoading to avoid bugs, and errors caused by displaying
             // data without actual data. 
             // Can also instead display somehting else for each field (like Loading...) if deisred instead of this apporach
@@ -82,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ];
 
         if (!_isLoading) {for (int i = 0; i < guardians!.length; i++) {
-                profileItemDataList.add(
+                studentItemDataList.add(
                     ProfileItemData(
                         'Guardian ${i + 1}', 
                         guardians![i].displayName, 
@@ -91,6 +92,27 @@ class _ProfilePageState extends State<ProfilePage> {
                     )
                 );
             }}
+
+        // END OF STUDENT DETAILS ---------------------------------------------------
+
+        // START OF TEACHER DETAILS -------------------------------------------------
+        final List<ProfileItemData> teacherItemDataList = 
+            // Show a blank list if _isLoading to avoid bugs, and errors caused by displaying
+            // data without actual data. 
+            // Can also instead display somehting else for each field (like Loading...) if deisred instead of this apporach
+            _isLoading ? []
+                : [
+                    ProfileItemData('Teacher No.', teacher!.teacherNo),
+                    ProfileItemData('Email', user!.email),
+                ];
+
+        // END OF TEACHER DETAILS ---------------------------------------------------
+
+        // Needs to be inside build method to access ItemDatalists.
+        List<ProfileItemData> detailsToBeDisplayed(UserRole role) {
+            if (role == UserRole.student) studentItemDataList;
+            return teacherItemDataList;
+        }
 
         return Stack(
             children: [
@@ -105,7 +127,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             flex: 8,
                             child: Padding(
                                 padding: EdgeInsets.only(bottom: 10),
-                                child: ProfileDetailsList(items: profileItemDataList),
+                                child: ProfileDetailsList(items: detailsToBeDisplayed(user!.role)),
                             ),
                         ),
                     ],
