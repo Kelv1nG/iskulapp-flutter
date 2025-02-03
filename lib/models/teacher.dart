@@ -4,7 +4,7 @@ class Teacher {
     final String id;
     final String userId;
     final DateTime employedDate;
-    final DateTime endDate;
+    final DateTime? endDate;
     final String teacherNo;
 
     Teacher({
@@ -18,8 +18,8 @@ class Teacher {
     factory Teacher.fromRow(sqlite.Row row) => Teacher(
         id: row['id'],
         userId: row['user_id'],
-        employedDate: row['employee_date'],
-        endDate: row['end_date'],
+        employedDate: DateTime.parse(row['employed_date']),
+        endDate: row['end_date'] != null ? DateTime.tryParse(row['end_date']) : null,
         teacherNo: row['teacher_no']
     );
 }
