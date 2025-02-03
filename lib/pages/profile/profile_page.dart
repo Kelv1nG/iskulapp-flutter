@@ -79,8 +79,8 @@ class _ProfilePageState extends State<ProfilePage> {
             // Can also instead display somehting else for each field (like Loading...) if deisred instead of this apporach
             _isLoading || student == null ? []
                 : [
-                    ProfileItemData('Student No.', student!.studentNo),
-                    ProfileItemData('Academic Year', '${student!.academicYearStart} - ${student!.academicYearEnd}'),
+                    ProfileItemData('Student No.', student!.studentNo, CupertinoIcons.lock_fill),
+                    ProfileItemData('Academic Year', '${student!.academicYearStart} - ${student!.academicYearEnd}', CupertinoIcons.lock_fill),
                     ProfileItemData('Grade Level', student!.gradeLevelName!.title(), CupertinoIcons.lock_fill),
                     ProfileItemData('Section', student!.sectionName!.title(), CupertinoIcons.lock_fill),
                     ProfileItemData('Date of Birth', DateFormat('dd MMM, yyyy').format(student!.birthDate!), CupertinoIcons.lock_fill),
@@ -108,8 +108,8 @@ class _ProfilePageState extends State<ProfilePage> {
             // Can also instead display somehting else for each field (like Loading...) if deisred instead of this apporach
             _isLoading || teacher == null ? []
                 : [
-                    ProfileItemData('Teacher No.', teacher!.teacherNo),
-                    ProfileItemData('Email', user!.email),
+                    ProfileItemData('Teacher No.', teacher!.teacherNo, CupertinoIcons.lock_fill),
+                    ProfileItemData('Email', user!.email, CupertinoIcons.lock_fill),
                 ];
 
         // END OF TEACHER DETAILS ---------------------------------------------------
