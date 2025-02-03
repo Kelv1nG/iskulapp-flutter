@@ -10,11 +10,9 @@ import 'package:school_erp/models/teacher.dart';
 import 'package:school_erp/pages/common_widgets/animation_widgets/loading_overlay.dart';
 import 'package:school_erp/pages/common_widgets/default_layout.dart';
 import 'package:school_erp/pages/profile/helpers/classes/profile_item_data.dart';
+import 'package:school_erp/pages/profile/helpers/services/get_profile_details.dart';
 import 'package:school_erp/pages/profile/widgets/profile_details_list.dart';
 import 'package:school_erp/pages/profile/widgets/profile_header.dart';
-import 'package:school_erp/repositories/guardian_repository.dart';
-import 'package:school_erp/repositories/student_repository.dart';
-import 'package:school_erp/repositories/teacher_repository.dart';
 import 'package:school_erp/utils/extensions/string_extension.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -37,8 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
         super.initState();
 
         _getUserDetails();
-        if (user?.role == UserRole.student) _getStudentProfileDetails();
-        if (user?.role == UserRole.teacher) _getTeacherProfileDetails();
+        _getGetProfileDetails();
     }
 
     void _getUserDetails() {
@@ -46,34 +43,26 @@ class _ProfilePageState extends State<ProfilePage> {
         setState(() => user = authUser);
     }
 
-    void _getStudentProfileDetails() async {
+    void _getGetProfileDetails() async {
         try {
             setState(() => _isLoading = true);
 
-            StudentRepository studentRepository = StudentRepository();
-            GuardianRepository guardianRepository = GuardianRepository();
-            List<Guardian> guardiansOfStudent = await guardianRepository.getGuardiansOfStudent(userId: user!.id);
-            Student studentDetails = await studentRepository.getStudent(userId: user!.id, academicYearId: user!.academicYearId);
+            if (user?.role == UserRole.student) {
+                Map<String, dynamic> getProfileDetails = await GetProfileDetails.forStudent(user!.id, user!.academicYearId);
 
-            setState(() {
-                    guardians = guardiansOfStudent;
-                    student = studentDetails;
-                });
-        } catch (e) {
-            print(e);
-        } finally {
-            setState(() => _isLoading = false);
-        }
-    }
+                return setState(() {
+                        guardians = getProfileDetails["guardiansOfStudent"];
+                        student = getProfileDetails["studentDetails"];
+                    });
 
-    void _getTeacherProfileDetails() async {
-        try {
-            setState(() => _isLoading = true);
+            }
 
-            TeacherRepository teacherRepository = TeacherRepository();
-            Teacher teacherDetails = await teacherRepository.getTeacher(userId: user!.id);
+            if (user?.role == UserRole.teacher) {
+                Teacher getProfileDetails = await GetProfileDetails.forTeacher(user!.id);
 
-            setState(() => teacher = teacherDetails);
+                return setState(() => teacher = getProfileDetails);
+            }
+
         } catch (e) {
             print(e);
         } finally {
@@ -88,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
             // Show a blank list if _isLoading to avoid bugs, and errors caused by displaying
             // data without actual data. 
             // Can also instead display somehting else for each field (like Loading...) if deisred instead of this apporach
-            _isLoading ? []
+            _isLoading || student == null ? []
                 : [
                     ProfileItemData('Student No.', student!.studentNo),
                     ProfileItemData('Academic Year', '${student!.academicYearStart} - ${student!.academicYearEnd}'),
@@ -99,7 +88,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ProfileItemData('Guardian Email', guardians![0].email!, CupertinoIcons.lock_fill, 370),
                 ];
 
-        if (!_isLoading) {for (int i = 0; i < guardians!.length; i++) {
+        if (!_isLoading && user!.role == UserRole.student) {for (int i = 0; i < guardians!.length; i++) {
                 studentItemDataList.add(
                     ProfileItemData(
                         'Guardian ${i + 1}', 
@@ -117,7 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
             // Show a blank list if _isLoading to avoid bugs, and errors caused by displaying
             // data without actual data. 
             // Can also instead display somehting else for each field (like Loading...) if deisred instead of this apporach
-            _isLoading ? []
+            _isLoading || teacher == null ? []
                 : [
                     ProfileItemData('Teacher No.', teacher!.teacherNo),
                     ProfileItemData('Email', user!.email),
@@ -127,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
         // Needs to be inside build method to access ItemDatalists.
         List<ProfileItemData> detailsToBeDisplayed(UserRole role) {
-            if (role == UserRole.student) studentItemDataList;
+            if (role == UserRole.student) return studentItemDataList;
             return teacherItemDataList;
         }
 
