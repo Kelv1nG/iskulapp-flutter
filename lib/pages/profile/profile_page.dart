@@ -14,6 +14,7 @@ import 'package:school_erp/pages/profile/widgets/profile_details_list.dart';
 import 'package:school_erp/pages/profile/widgets/profile_header.dart';
 import 'package:school_erp/repositories/guardian_repository.dart';
 import 'package:school_erp/repositories/student_repository.dart';
+import 'package:school_erp/repositories/teacher_repository.dart';
 import 'package:school_erp/utils/extensions/string_extension.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -37,6 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
         _getUserDetails();
         if (user?.role == UserRole.student) _getStudentProfileDetails();
+        if (user?.role == UserRole.teacher) _getTeacherProfileDetails();
     }
 
     void _getUserDetails() {
@@ -57,6 +59,21 @@ class _ProfilePageState extends State<ProfilePage> {
                     guardians = guardiansOfStudent;
                     student = studentDetails;
                 });
+        } catch (e) {
+            print(e);
+        } finally {
+            setState(() => _isLoading = false);
+        }
+    }
+
+    void _getTeacherProfileDetails() async {
+        try {
+            setState(() => _isLoading = true);
+
+            TeacherRepository teacherRepository = TeacherRepository();
+            Teacher teacherDetails = await teacherRepository.getTeacher(userId: user!.id);
+
+            setState(() => teacher = teacherDetails);
         } catch (e) {
             print(e);
         } finally {
