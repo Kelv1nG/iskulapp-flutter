@@ -43,10 +43,9 @@ class AttendanceCheckItem extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              flex: 2,
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
                   Radio<AttendanceStatus>(
                     value: AttendanceStatus.late,
@@ -56,16 +55,15 @@ class AttendanceCheckItem extends StatelessWidget {
                       _showTimeInModal(context);
                     },
                   ),
-                  SizedBox(
-                    width: 40,
-                    child: Text(
-                      sa.attendance.status == AttendanceStatus.late &&
-                              sa.attendance.timeIn != null
-                          ? formatTimeOfDay(sa.attendance.timeIn!)
-                          : "",
-                      style: const TextStyle(fontSize: 12),
+                  if (sa.attendance.status == AttendanceStatus.late &&
+                      sa.attendance.timeIn != null)
+                    Positioned(
+                      left: 75,
+                      child: Text(
+                        formatTimeOfDay(sa.attendance.timeIn!),
+                        style: const TextStyle(fontSize: 12),
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
