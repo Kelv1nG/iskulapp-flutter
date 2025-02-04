@@ -1,14 +1,16 @@
 import 'dart:async';
+import 'package:powersync/powersync.dart';
 import 'package:school_erp/features/powersync/db.dart';
 
 class SyncStatusManager {
+// to be used for initial check
+  bool isSyncing = true;
+  StreamController<bool>? _syncController;
+  StreamSubscription<SyncStatus>? _dbStatusSubscription;
+
   SyncStatusManager._internal();
   static final SyncStatusManager _instance = SyncStatusManager._internal();
   factory SyncStatusManager() => _instance;
-
-  // to be used for initial check
-  bool isSyncing = false;
-  StreamController<bool>? _syncController;
 
   StreamController<bool> get syncController {
     _syncController ??= StreamController<bool>.broadcast();
@@ -22,8 +24,9 @@ class SyncStatusManager {
       _syncController = StreamController<bool>.broadcast();
     }
 
-    db.statusStream.listen((status) {
-      final isConnectedSyncing = status.connected && !(status.downloading || status.uploading);
+    _dbStatusSubscription = db.statusStream.listen((status) {
+      final isConnectedSyncing =
+          status.connected && !(status.downloading || status.uploading);
       final notConnected = !status.connected;
 
       if (isConnectedSyncing || notConnected) {
@@ -39,6 +42,10 @@ class SyncStatusManager {
   void dispose() {
     _syncController?.close();
     _syncController = null;
+    _dbStatusSubscription?.cancel();
+    _dbStatusSubscription = null;
+    // succeeding calls to initialize should still have isSyncing = true as init value
+    isSyncing = true;
   }
 }
 
