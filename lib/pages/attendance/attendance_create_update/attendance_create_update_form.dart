@@ -66,7 +66,7 @@ class _AttendanceCreateUpdateFormState extends State<AttendanceCreateUpdateForm>
 
   @override
   Widget build(BuildContext context) {
-    if (isSyncing) {
+    if (!synced) {
       return const Center(child: SyncingProgressIndicator());
     }
 
