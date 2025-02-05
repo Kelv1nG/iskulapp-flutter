@@ -13,10 +13,12 @@ class AttendanceCreateUpdateForm extends StatefulWidget {
   const AttendanceCreateUpdateForm({super.key});
 
   @override
-  _AttendanceCreateUpdateFormState createState() => _AttendanceCreateUpdateFormState();
+  _AttendanceCreateUpdateFormState createState() =>
+      _AttendanceCreateUpdateFormState();
 }
 
-class _AttendanceCreateUpdateFormState extends State<AttendanceCreateUpdateForm> with SyncStatusCheck {
+class _AttendanceCreateUpdateFormState extends State<AttendanceCreateUpdateForm>
+    with SyncStatusCheck {
   var isLoading = true;
   var sectionList = <Section>[];
   Section? selectedSection;
@@ -72,7 +74,8 @@ class _AttendanceCreateUpdateFormState extends State<AttendanceCreateUpdateForm>
       return const Center(child: CircularProgressIndicator());
     }
 
-    return Expanded(
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
       child: Column(
         children: [
           AttendanceFilter(

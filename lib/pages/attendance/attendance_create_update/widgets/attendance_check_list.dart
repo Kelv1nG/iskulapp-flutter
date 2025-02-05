@@ -37,17 +37,18 @@ class AttendanceCheckList extends StatelessWidget {
             AttendanceCheckListHeader(),
             Divider(
               color: Colors.grey.shade300,
-              height: 1,
+              height: 0,
               thickness: 1,
             ),
             Expanded(
               child: ListView.separated(
                 shrinkWrap: true,
+                padding: EdgeInsets.zero,
                 physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: state.attendanceList.length,
                 separatorBuilder: (context, index) => Column(
                   children: [
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 2),
                     GeneralDivider(
                       symmetricDividerSpaceHeight: 0.25,
                       dividerColor: Colors.grey.shade300,
@@ -85,7 +86,7 @@ class AttendanceCheckListHeader extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 1,
+          flex: 2,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -94,7 +95,6 @@ class AttendanceCheckListHeader extends StatelessWidget {
                 "Late",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(width: 40),
             ],
           ),
         ),
