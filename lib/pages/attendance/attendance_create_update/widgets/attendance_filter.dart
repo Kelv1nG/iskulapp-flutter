@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:school_erp/models/section.dart';
-import 'package:school_erp/pages/attendace/attedance_create_update/widgets/filter/date_selector.dart';
-import 'package:school_erp/pages/attendace/attedance_create_update/widgets/filter/section_filter.dart';
+import 'package:school_erp/pages/attendance/attendance_create_update/widgets/filter/date_selector.dart';
+import 'package:school_erp/pages/attendance/attendance_create_update/widgets/filter/section_filter.dart';
 
 class AttendanceFilter extends StatelessWidget {
   final Section? selectedSection;

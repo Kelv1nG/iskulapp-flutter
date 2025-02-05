@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:school_erp/features/attendance/cubit/attendance_check_cubit.dart';
 import 'package:school_erp/features/auth/utils.dart';
 import 'package:school_erp/models/section.dart';
-import 'package:school_erp/pages/attendace/attedance_create_update/widgets/attendance_filter.dart';
-import 'package:school_erp/pages/attendace/attedance_create_update/widgets/attendance_check_list.dart';
+import 'package:school_erp/pages/attendance/attendance_create_update/widgets/attendance_check_list.dart';
+import 'package:school_erp/pages/attendance/attendance_create_update/widgets/attendance_filter.dart';
 import 'package:school_erp/repositories/repositories.dart';
 
 class AttendanceCreateUpdateForm extends StatefulWidget {

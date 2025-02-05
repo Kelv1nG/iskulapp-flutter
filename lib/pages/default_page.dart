@@ -8,7 +8,9 @@ class DefaultPage extends StatelessWidget {
   final Color? fontColor;
 
   const DefaultPage(
-      {required this.title, this.fontColor = AppColors.whiteColor, super.key});
+      {required this.title,
+      this.fontColor = AppColors.primaryColor,
+      super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:school_erp/features/attendance/cubit/attendance_check_cubit.dart';
 import 'package:school_erp/features/attendance/cubit/attendance_check_state.dart';
 import 'package:school_erp/models/section.dart';
-import 'package:school_erp/pages/attendace/attedance_create_update/widgets/attendance_check_item.dart';
+import 'package:school_erp/pages/attendance/attendance_create_update/widgets/attendance_check_item.dart';
 import 'package:school_erp/pages/common_widgets/dividers/general_divider.dart';
 
 class AttendanceCheckList extends StatelessWidget {
