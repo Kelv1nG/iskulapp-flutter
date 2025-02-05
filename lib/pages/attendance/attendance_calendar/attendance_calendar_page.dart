@@ -25,7 +25,8 @@ class AttendanceCalendarPage extends StatefulWidget {
   createState() => _AttendanceCalendarPageState();
 }
 
-class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> with SyncStatusCheck {
+class _AttendanceCalendarPageState extends State<AttendanceCalendarPage>
+    with SyncStatusCheck {
   final _firstDay = DateTime.utc(2000, 1, 1);
   final _lastDay = DateTime.now();
   var _focusedDay = DateTime.now();
@@ -73,11 +74,13 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> with Sy
     try {
       setState(() => _loadingStates["isStudentAttendanceLoading"] = true);
 
-      List<Attendance> studentAttendance = await attendanceRepository.getStudentAttendance(user!.id);
+      List<Attendance> studentAttendance =
+          await attendanceRepository.getStudentAttendance(user!.id);
 
       if (studentAttendance.isEmpty) throw Exception("No attendance record.");
 
-      setState(() => attendanceDetails = AttendanceCalendarUtils.convertAttendanceDetails(studentAttendance));
+      setState(() => attendanceDetails =
+          AttendanceCalendarUtils.convertAttendanceDetails(studentAttendance));
     }
     // Handle better in the future.
     catch (error) {
@@ -94,9 +97,11 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> with Sy
       String teacherId = getTeacherId(context);
 
       List<Section> responseSections =
-          await sectionRepository.getTeacherSectionsAll(teacherId: teacherId, academicYearId: user!.academicYearId);
+          await sectionRepository.getTeacherSectionsAll(
+              teacherId: teacherId, academicYearId: user!.academicYearId);
 
-      if (responseSections.isEmpty) throw Exception("Teacher has no sections handled.");
+      if (responseSections.isEmpty)
+        throw Exception("Teacher has no sections handled.");
 
       setState(() => sectionsOfTeacher = responseSections);
     }
@@ -118,14 +123,17 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> with Sy
     try {
       setState(() => _loadingStates["isStudentsLoading"] = true);
 
-      List<Student> studentsOfSection = await studentRepository.getStudentsBySection(newSection.id);
-      List<Attendance> attendanceOfStudents =
-          await attendanceRepository.getStudentsAttendanceBySection(sectionId: newSection.id);
+      List<Student> studentsOfSection =
+          await studentRepository.getStudentsBySection(newSection.id);
+      List<Attendance> attendanceOfStudents = await attendanceRepository
+          .getStudentsAttendanceBySection(sectionId: newSection.id);
 
-      if (studentsOfSection.isEmpty) throw Exception("No students in ths section.");
+      if (studentsOfSection.isEmpty)
+        throw Exception("No students in ths section.");
       if (attendanceOfStudents.isEmpty) attendanceOfStudents = [];
 
-      studentsOfSection.sort((a, b) => a.lastName!.toLowerCase().compareTo(b.lastName!.toLowerCase()));
+      studentsOfSection.sort((a, b) =>
+          a.lastName!.toLowerCase().compareTo(b.lastName!.toLowerCase()));
 
       setState(() {
         filterBy = null;
@@ -147,10 +155,12 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> with Sy
     if (student == null) {
       return setState(() => attendanceDetails = {});
     }
-    List<Attendance> studentAttendanceRecord =
-        attendanceStudent.where((attendance) => attendance.studentId == student.id).toList();
-    return setState(
-        () => attendanceDetails = AttendanceCalendarUtils.convertAttendanceDetails(studentAttendanceRecord));
+    List<Attendance> studentAttendanceRecord = attendanceStudent
+        .where((attendance) => attendance.studentId == student.id)
+        .toList();
+    return setState(() => attendanceDetails =
+        AttendanceCalendarUtils.convertAttendanceDetails(
+            studentAttendanceRecord));
   }
 
   void _onChangeFilterBy(FilterByType? filter) {
@@ -161,10 +171,11 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> with Sy
   }
 
   void _onChangeFilterRange(DateTimeRange dateTimeRange) {
-    setState(() => attendanceOfDateRange = attendanceStudent.where((attendance) {
-          return attendance.attendanceDate.isAfter(dateTimeRange.start) &&
-              attendance.attendanceDate.isBefore(dateTimeRange.end);
-        }).toList());
+    setState(
+        () => attendanceOfDateRange = attendanceStudent.where((attendance) {
+              return attendance.attendanceDate.isAfter(dateTimeRange.start) &&
+                  attendance.attendanceDate.isBefore(dateTimeRange.end);
+            }).toList());
   }
 
   @override
@@ -173,7 +184,7 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> with Sy
       title: "Attendance",
       content: [
         Expanded(
-          child: isSyncing
+          child: !synced
               ? const Center(child: SyncingProgressIndicator())
               : Column(
                   children: [
@@ -183,18 +194,32 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> with Sy
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           AttendanceCalendarUtils.buildStatus(
-                              context, AttendanceStatus.present.displayName, AppColors.presentColor, false),
+                              context,
+                              AttendanceStatus.present.displayName,
+                              AppColors.presentColor,
+                              false),
                           AttendanceCalendarUtils.buildStatus(
-                              context, AttendanceStatus.late.displayName, AppColors.lateColor, false),
+                              context,
+                              AttendanceStatus.late.displayName,
+                              AppColors.lateColor,
+                              false),
                           AttendanceCalendarUtils.buildStatus(
-                              context, AttendanceStatus.absent.displayName, AppColors.absentColor, false),
+                              context,
+                              AttendanceStatus.absent.displayName,
+                              AppColors.absentColor,
+                              false),
                           AttendanceCalendarUtils.buildStatus(
-                              context, AttendanceStatus.authorizedAbsence.displayName, AppColors.leaveColor, false),
+                              context,
+                              AttendanceStatus.authorizedAbsence.displayName,
+                              AppColors.leaveColor,
+                              false),
                         ],
                       ),
                     ),
-                    if (filterBy == FilterByType.student && currentSection != null ||
-                        user?.role == UserRole.student && !_loadingStates["isStudentAttendanceLoading"]!)
+                    if (filterBy == FilterByType.student &&
+                            currentSection != null ||
+                        user?.role == UserRole.student &&
+                            !_loadingStates["isStudentAttendanceLoading"]!)
                       AttendanceCalendar(
                         details: attendanceDetails,
                         firstDay: _firstDay,
