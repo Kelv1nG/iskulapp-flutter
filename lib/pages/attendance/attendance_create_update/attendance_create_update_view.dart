@@ -8,7 +8,14 @@ class AttendanceCreateUpdateView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(title: 'Check Attendance', content: [
-      AttendanceCreateUpdateForm(),
+      const Expanded(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.only(top: 18),
+            child: AttendanceCreateUpdateForm(),
+          ),
+        ),
+      ),
     ]);
   }
 }
