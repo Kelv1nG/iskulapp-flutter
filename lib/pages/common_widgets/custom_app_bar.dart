@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:school_erp/routes/routes.dart';
 import 'package:school_erp/features/transition/clean_slide_transition.dart';
 import 'package:school_erp/pages/common_widgets/app_bar_widgets/sql_console.dart';
 import 'package:school_erp/theme/text_styles.dart';
@@ -34,7 +35,7 @@ class CustomAppBar extends StatelessWidget {
                 child: IconButton(
                   iconSize: 25,
                   icon: const Icon(Icons.chevron_left, color: Colors.white),
-                  onPressed: onBackPressed ?? () => Navigator.pop(context),
+                  onPressed: onBackPressed ?? () => router.pop(),
                 ),
               ),
               Expanded(
@@ -45,8 +46,7 @@ class CustomAppBar extends StatelessWidget {
                     child: Text(
                       title,
                       style: titleStyle ??
-                          headingStyle()
-                              .copyWith(fontWeight: FontWeight.w100),
+                          headingStyle().copyWith(fontWeight: FontWeight.w100),
                     ),
                   ),
                 ),

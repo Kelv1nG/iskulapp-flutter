@@ -36,7 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final result = await authService.login(event.email, event.password);
 
     if (result is AuthRequestSuccess) {
-      openDatabase(); // connect powersync db if user logs in
+      await openDatabase(); // connect powersync db if user logs in
       emit(AuthState.authenticated(result.user, result.accessToken));
     } else if (result is AuthRequestFailure) {
       emit(AuthState.failure(result.statusCode, result.message));
@@ -49,7 +49,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(const AuthState.loading());
     await authService.logout();
-
+    db.disconnectAndClear(); // sets hasSynced to false, clears db
     emit(const AuthState.unauthenticated());
   }
 }

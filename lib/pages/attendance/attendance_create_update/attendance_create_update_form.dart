@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:school_erp/features/attendance/cubit/attendance_check_cubit.dart';
 import 'package:school_erp/features/auth/utils.dart';
+import 'package:school_erp/features/powersync/sync_check_mixin.dart';
 import 'package:school_erp/models/section.dart';
-import 'package:school_erp/pages/attendace/attedance_create_update/widgets/attendance_filter.dart';
-import 'package:school_erp/pages/attendace/attedance_create_update/widgets/attendance_check_list.dart';
+import 'package:school_erp/pages/attendance/attendance_create_update/widgets/attendance_check_list.dart';
+import 'package:school_erp/pages/attendance/attendance_create_update/widgets/attendance_filter.dart';
+import 'package:school_erp/pages/common_widgets/loading/syncing_progress.dart';
 import 'package:school_erp/repositories/repositories.dart';
 
 class AttendanceCreateUpdateForm extends StatefulWidget {
@@ -15,8 +17,8 @@ class AttendanceCreateUpdateForm extends StatefulWidget {
       _AttendanceCreateUpdateFormState();
 }
 
-class _AttendanceCreateUpdateFormState
-    extends State<AttendanceCreateUpdateForm> {
+class _AttendanceCreateUpdateFormState extends State<AttendanceCreateUpdateForm>
+    with SyncStatusCheck {
   var isLoading = true;
   var sectionList = <Section>[];
   Section? selectedSection;
@@ -25,7 +27,7 @@ class _AttendanceCreateUpdateFormState
   @override
   initState() {
     super.initState();
-    _loadSections();
+    syncingCheck(() => _loadSections());
   }
 
   Future<void> _loadSections() async {
@@ -64,37 +66,44 @@ class _AttendanceCreateUpdateFormState
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const CircularProgressIndicator()
-        : Expanded(
-            child: Column(
-              children: [
-                AttendanceFilter(
-                  selectedSection: selectedSection,
-                  sectionList: sectionList,
-                  selectedDate: selectedDate,
-                  onSectionSelected: (section) {
-                    setState(() {
-                      selectedSection = section;
-                      _getAttendanceList(context);
-                    });
-                  },
-                  onDateSelected: (pickedDate) {
-                    setState(() {
-                      selectedDate = pickedDate!;
-                      _getAttendanceList(context);
-                    });
-                  },
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                Expanded(
-                  child: AttendanceCheckList(
-                    section: selectedSection,
-                    date: selectedDate,
-                  ),
-                ),
-              ],
+    if (!synced) {
+      return const Center(child: SyncingProgressIndicator());
+    }
+
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: Column(
+        children: [
+          AttendanceFilter(
+            selectedSection: selectedSection,
+            sectionList: sectionList,
+            selectedDate: selectedDate,
+            onSectionSelected: (section) {
+              setState(() {
+                selectedSection = section;
+                _getAttendanceList(context);
+              });
+            },
+            onDateSelected: (pickedDate) {
+              setState(() {
+                selectedDate = pickedDate!;
+                _getAttendanceList(context);
+              });
+            },
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+          Expanded(
+            child: AttendanceCheckList(
+              section: selectedSection,
+              date: selectedDate,
             ),
-          );
+          ),
+        ],
+      ),
+    );
   }
 }

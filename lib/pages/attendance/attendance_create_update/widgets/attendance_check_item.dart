@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:school_erp/features/attendance/cubit/attendance_check_cubit.dart';
 import 'package:school_erp/features/attendance/cubit/attendance_check_state.dart';
 import 'package:school_erp/features/auth/utils.dart';
-import 'package:school_erp/pages/attendace/attedance_create_update/widgets/time_in_modal.dart';
+import 'package:school_erp/pages/attendance/attendance_create_update/widgets/time_in_modal.dart';
 import 'package:school_erp/utils/time_utils/formatter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -43,10 +43,9 @@ class AttendanceCheckItem extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              flex: 2,
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
                   Radio<AttendanceStatus>(
                     value: AttendanceStatus.late,
@@ -56,16 +55,15 @@ class AttendanceCheckItem extends StatelessWidget {
                       _showTimeInModal(context);
                     },
                   ),
-                  SizedBox(
-                    width: 40,
-                    child: Text(
-                      sa.attendance.status == AttendanceStatus.late &&
-                              sa.attendance.timeIn != null
-                          ? formatTimeOfDay(sa.attendance.timeIn!)
-                          : "",
-                      style: const TextStyle(fontSize: 12),
+                  if (sa.attendance.status == AttendanceStatus.late &&
+                      sa.attendance.timeIn != null)
+                    Positioned(
+                      left: 75,
+                      child: Text(
+                        formatTimeOfDay(sa.attendance.timeIn!),
+                        style: const TextStyle(fontSize: 12),
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
