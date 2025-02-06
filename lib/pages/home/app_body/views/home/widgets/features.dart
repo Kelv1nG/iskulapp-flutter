@@ -1,16 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:school_erp/enums/user_role.dart';
-import 'package:school_erp/features/transition/clean_slide_transition.dart';
-import 'package:school_erp/pages/assignment/assignment_answers/assignment_answers_page.dart';
-import 'package:school_erp/pages/assignment/assignment_list_page/assignment_list_page.dart';
-import 'package:school_erp/pages/attendace/attedance_create_update/attendance_create_update_page.dart';
-import 'package:school_erp/pages/attendance/attendance_calendar/attendance_calendar_page.dart';
-import 'package:school_erp/pages/calendar/calendar_attendance_page.dart';
-import 'package:school_erp/pages/default_page.dart';
-import 'package:school_erp/pages/events/events_page.dart';
-import 'package:school_erp/pages/learn/learn.dart';
-import 'package:school_erp/pages/leave_application/leave_application_page.dart';
-import 'package:school_erp/pages/school_gallery/school_gallery_page.dart';
 import 'package:school_erp/theme/colors.dart';
 import 'package:school_erp/theme/text_styles.dart';
 import 'package:school_erp/features/auth/auth_repository/schemas/user.dart';
