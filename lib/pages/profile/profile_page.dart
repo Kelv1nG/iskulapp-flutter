@@ -10,7 +10,7 @@ import 'package:school_erp/models/teacher.dart';
 import 'package:school_erp/pages/common_widgets/animation_widgets/loading_overlay.dart';
 import 'package:school_erp/pages/common_widgets/default_layout.dart';
 import 'package:school_erp/pages/profile/helpers/classes/profile_item_data.dart';
-import 'package:school_erp/pages/profile/helpers/services/get_profile_details.dart';
+import 'package:school_erp/pages/profile/helpers/services/profile_details.dart';
 import 'package:school_erp/pages/profile/widgets/profile_details_list.dart';
 import 'package:school_erp/pages/profile/widgets/profile_header.dart';
 import 'package:school_erp/utils/extensions/string_extension.dart';
@@ -48,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
             setState(() => _isLoading = true);
 
             if (user?.role == UserRole.student) {
-                Map<String, dynamic> profileDetails = await GetProfileDetails.forStudent(user!.id, user!.academicYearId);
+                Map<String, dynamic> profileDetails = await ProfileDetails.forStudent(user!.id, user!.academicYearId);
 
                 return setState(() {
                         guardians = profileDetails["guardiansOfStudent"];
@@ -58,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
             }
 
             if (user?.role == UserRole.teacher) {
-                Map<String, dynamic> profileDetails = await GetProfileDetails.forTeacher(user!.id);
+                Map<String, dynamic> profileDetails = await ProfileDetails.forTeacher(user!.id);
 
                 return setState(() => teacher = profileDetails["teacherDetails"]);
             }
