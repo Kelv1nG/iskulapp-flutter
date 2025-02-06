@@ -2,7 +2,7 @@ import 'package:powersync/sqlite3_common.dart' as sqlite;
 import 'package:school_erp/interfaces/display_values.dart';
 import 'package:school_erp/utils/extensions/string_extension.dart';
 
-class AcademicYear extends EntityDisplayData{
+class AcademicYear implements EntityDisplayData{
     final int start;
     final int end;
     final String name;
