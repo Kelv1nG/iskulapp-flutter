@@ -5,7 +5,7 @@ import 'package:school_erp/repositories/guardian_repository.dart';
 import 'package:school_erp/repositories/student_repository.dart';
 import 'package:school_erp/repositories/teacher_repository.dart';
 
-class GetProfileDetails {
+class ProfileDetails {
     static Future<Map<String, dynamic>> forStudent(userId, academicYearId) async {
         StudentRepository studentRepository = StudentRepository();
         GuardianRepository guardianRepository = GuardianRepository();
