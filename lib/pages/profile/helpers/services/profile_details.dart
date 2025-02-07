@@ -1,6 +1,7 @@
 import 'package:school_erp/models/guardian.dart';
 import 'package:school_erp/models/student.dart';
 import 'package:school_erp/models/teacher.dart';
+import 'package:school_erp/pages/profile/helpers/classes/student_profile_details.dart';
 import 'package:school_erp/repositories/guardian_repository.dart';
 import 'package:school_erp/repositories/student_repository.dart';
 import 'package:school_erp/repositories/teacher_repository.dart';
@@ -11,14 +12,13 @@ TeacherRepository teacherRepository = TeacherRepository();
 
 class ProfileDetails {
 
-    static Future<Map<String, dynamic>> forStudent(userId, academicYearId) async {
+    static Future<StudentProfileDetails> forStudent(userId, academicYearId) async {
         List<Guardian> guardiansOfStudent = await guardianRepository.getGuardiansOfStudent(userId: userId);
         Student studentDetails = await studentRepository.getStudent(userId: userId, academicYearId: academicYearId);
 
-        return {
-            "studentDetails": studentDetails,
-            "guardiansOfStudent": guardiansOfStudent
-        };
+        StudentProfileDetails studentProfileDetails = StudentProfileDetails(studentDetails: studentDetails, guardiansOfStudent: guardiansOfStudent);
+
+        return studentProfileDetails;
     }
 
     static Future<Map<String, dynamic>> forTeacher(userId) async {
