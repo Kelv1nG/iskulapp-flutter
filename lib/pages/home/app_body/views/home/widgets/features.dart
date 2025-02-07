@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:school_erp/enums/user_role.dart';
+import 'package:school_erp/routes/routes.dart';
 import 'package:school_erp/theme/colors.dart';
 import 'package:school_erp/theme/text_styles.dart';
 import 'package:school_erp/features/auth/auth_repository/schemas/user.dart';
@@ -17,49 +17,48 @@ class Features extends StatelessWidget {
         FeatureButton(
           title: 'Quiz',
           icon: Icons.edit_note_outlined,
-          route: '/default-page?title=Quiz',
+          path: '/default-page?title=Quiz',
         ),
         FeatureButton(
           title: 'Homework',
           icon: Icons.assignment,
-          route: '/default-page?title=Assignment',
-          //target: AssignmentListPage(),
+          path: '/default-page?title=Assignment',
         ),
         FeatureButton(
           title: 'Learn',
           icon: Icons.local_library_outlined,
-          route: '/default-page?title=Learn',
+          path: '/default-page?title=Learn',
           //target: LearnPage(),
         ),
         FeatureButton(
           title: 'Attendance',
           icon: Icons.emoji_people_outlined,
-          route: '/attendance-check',
-          visible: UserRole.teacher == user.role,
+          path: attendanceCheckRoute.path,
+          visible: attendanceCheckRoute.allowedRoles!.contains(user.role),
         ),
         FeatureButton(
           title: 'Billing',
           icon: Icons.payment_outlined,
-          route: '/billing',
-          visible: UserRole.parent == user.role,
+          path: billingRoute.path,
+          visible: billingRoute.allowedRoles!.contains(user.role),
         ),
       ]),
       FeatureSection(title: 'Time Calendar', features: <FeatureButton>[
         FeatureButton(
           title: '${user.role.displayName} Calendar',
           icon: Icons.calendar_month,
-          route: '/attendance-calendar',
+          path: attendanceCalendarRoute.path,
         ),
         const FeatureButton(
           title: 'Subject\nSchedule',
           icon: Icons.event_note,
-          route: '/default-page?title=TimeTable',
+          path: '/default-page?title=TimeTable',
           //target: TimeTablePage(),
         ),
         const FeatureButton(
           title: 'Apply Absents',
           icon: Icons.edit_calendar,
-          route: '/default-page?title=LeaveApplication',
+          path: '/default-page?title=LeaveApplication',
           //target: LeaveApplicationPage(),
         ),
       ]),
@@ -67,13 +66,13 @@ class Features extends StatelessWidget {
         FeatureButton(
           title: 'Events',
           icon: Icons.celebration,
-          route: '/default-page?title=Events',
+          path: '/default-page?title=Events',
           //target: EventsPage(),
         ),
         FeatureButton(
           title: 'School Gallery',
           icon: Icons.collections,
-          route: '/default-page?title=SchoolGallery',
+          path: '/default-page?title=SchoolGallery',
         ),
         //target: SchoolGalleryPage(),
       ]),
@@ -111,7 +110,7 @@ class Features extends StatelessWidget {
               children: feature.features.where((f) => f.visible).map((feature) {
                 return GestureDetector(
                   onTap: () {
-                    context.push(feature.route);
+                    context.push(feature.path);
                   },
                   child: Column(
                     children: [
@@ -162,12 +161,12 @@ class FeatureSection {
 class FeatureButton {
   final String title;
   final IconData icon;
-  final String route;
+  final String path;
   final bool visible;
 
   const FeatureButton(
       {required this.title,
       required this.icon,
-      required this.route,
+      required this.path,
       this.visible = true});
 }
