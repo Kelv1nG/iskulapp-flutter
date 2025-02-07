@@ -11,6 +11,7 @@ import 'package:school_erp/pages/common_widgets/animation_widgets/loading_overla
 import 'package:school_erp/pages/common_widgets/default_layout.dart';
 import 'package:school_erp/pages/profile/helpers/classes/profile_item_data.dart';
 import 'package:school_erp/pages/profile/helpers/classes/student_profile_details.dart';
+import 'package:school_erp/pages/profile/helpers/classes/teacher_profile_details.dart';
 import 'package:school_erp/pages/profile/helpers/services/profile_details.dart';
 import 'package:school_erp/pages/profile/widgets/profile_details_list.dart';
 import 'package:school_erp/pages/profile/widgets/profile_header.dart';
@@ -36,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
         super.initState();
 
         _getUserDetails();
-        _getGetProfileDetails();
+        _getProfileDetails();
     }
 
     void _getUserDetails() {
@@ -44,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
         setState(() => user = authUser);
     }
 
-    void _getGetProfileDetails() async {
+    void _getProfileDetails() async {
         try {
             setState(() => _isLoading = true);
 
@@ -59,9 +60,9 @@ class _ProfilePageState extends State<ProfilePage> {
             }
 
             if (user?.role == UserRole.teacher) {
-                Map<String, dynamic> profileDetails = await ProfileDetails.forTeacher(user!.id);
+                TeacherProfileDetails teacherProfileDetails = await ProfileDetails.forTeacher(user!.id);
 
-                return setState(() => teacher = profileDetails["teacherDetails"]);
+                return setState(() => teacher = teacherProfileDetails.teacherDetails);
             }
 
         } catch (e) {
