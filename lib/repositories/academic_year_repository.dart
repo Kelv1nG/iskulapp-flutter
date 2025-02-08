@@ -8,13 +8,15 @@ class AcademicYearRepository extends ReadOnlyRepository<AcademicYear> {
         : super(table: academicYearsTable, fromRow: AcademicYear.fromRow);
 
     // Check uniformity of this. with object as a parameter with required or not.
-    Future<AcademicYear> getAcademicYearOfStudent({ 
+    Future<AcademicYear?> getAcademicYearOfStudent({ 
         required String academicYearId,
     }) async {
         var results = await database.execute(
             academicYearsOfStudent,
             [academicYearId],
         );
+
+        if (results.isEmpty) return null;
 
         return AcademicYear.fromRow(results.first);
     }
