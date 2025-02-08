@@ -32,6 +32,24 @@ final assignmentListRoute = RouteDetail(
   allowedRoles: [UserRole.teacher, UserRole.student],
 );
 
+final assessmentSetupRoute = RouteDetail(
+  name: 'assessment-setup',
+  path: '/assessment-setup',
+  allowedRoles: [UserRole.teacher],
+);
+
+final assessmentTakersRoute = RouteDetail(
+  name: 'assessment-takers-setup',
+  path: '/assessment-takers-setup',
+  allowedRoles: [UserRole.teacher],
+);
+
+final assessmentQuestionSetupRoute = RouteDetail(
+  name: 'assessment-question-setup',
+  path: '/assessment-question-setup',
+  allowedRoles: [UserRole.teacher],
+);
+
 final billingRoute = RouteDetail(
     name: 'billing', path: '/billing', allowedRoles: [UserRole.parent]);
 
