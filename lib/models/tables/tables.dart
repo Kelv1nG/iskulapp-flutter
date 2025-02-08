@@ -2,6 +2,7 @@ export 'academic_years_table.dart';
 export 'assessments_table.dart';
 export 'assessment_takers_table.dart';
 export 'attendances_table.dart';
+export 'grade_levels.dart';
 export 'guardians_table.dart';
 export 'guardian_student_table.dart';
 export 'sections_table.dart';

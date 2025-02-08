@@ -20,8 +20,8 @@ const teacherAssessmentsSql = """
 
 const teacherSubjectsSql = """
   SELECT 
-  	subject_years.*, 
-	subjects.name AS subject_name
+   subject_years.*, 
+ subjects.name AS subject_name
   FROM teacher_subjects
   LEFT JOIN subject_years ON subject_years.id = teacher_subjects.subject_year_id
   LEFT JOIN subjects ON subjects.id = subject_years.subject_id
@@ -53,6 +53,12 @@ const teacherSectionsSql = """
   LEFT JOIN academic_years ON academic_years.id = sections.academic_year_id
   WHERE subject_classes.teacher_id = ?
     AND academic_years.id = ?
+""";
+
+const teacherSql = """
+    SELECT teachers.*
+    FROM teachers
+    WHERE teachers.user_id = ?
 """;
 
 const studentsAttendanceByDateAndSectionSql = """
@@ -126,4 +132,70 @@ const subjectYearSql = """
   SELECT *
   FROM subject_years
   WHERE id = ?
+""";
+
+const sectionOfStudentSql = """
+  SELECT 
+    sections.*,
+    grade_levels.name AS grade_level_name
+  FROM students
+  JOIN student_sections ON students.id = student_sections.student_id
+  JOIN sections ON student_sections.section_id = sections.id
+  JOIN grade_levels ON sections.id = grade_levels.id
+  WHERE students.user_id = ?
+""";
+
+// Guadrian
+const guardiansOfStudentSql = """
+  SELECT
+    guardians.id,
+    user_profiles.user_id,
+    user_profiles.first_name,
+    user_profiles.last_name,
+    user_profiles.gender,
+    users.email
+  FROM students
+  JOIN guardian_student ON students.id = guardian_student.student_id
+  JOIN guardians ON guardian_student.guardian_id = guardians.id
+  JOIN user_profiles ON user_profiles.user_id = guardians.user_id
+  JOIN users ON user_profiles.user_id = users.id
+  WHERE students.user_id = ?
+""";
+
+// Academic Year
+const academicYearsOfStudent = """
+  SELECT academic_years.*
+  FROM academic_years
+  WHERE academic_years.id = ?
+  LIMIT 1;
+""";
+
+// Student
+const studentSql = """
+  SELECT 
+    user_profiles.user_id,
+    user_profiles.first_name,
+    user_profiles.last_name,
+    user_profiles.birth_date,
+    user_profiles.gender,
+    user_profiles.address,
+    students.id,
+    students.student_no,
+    grade_levels.name AS grade_level_name,
+    grade_levels.id AS grade_level_id,
+    sections.name AS section_name,
+    sections.id AS section_id,
+    academic_years.name AS academic_year_name,
+    academic_years.start AS academic_year_start,
+    academic_years.end AS academic_year_end,
+    academic_years.school_id AS school_id
+  FROM students
+  JOIN user_profiles ON students.user_id = user_profiles.user_id
+  JOIN student_sections ON students.id = student_sections.student_id
+  JOIN sections ON student_sections.section_id = sections.id
+  JOIN grade_levels ON sections.id = grade_levels.id
+  JOIN academic_years ON academic_years.id = academic_years.id
+  WHERE students.user_id = ?
+    AND academic_years.id = ?
+  LIMIT 1;
 """;
