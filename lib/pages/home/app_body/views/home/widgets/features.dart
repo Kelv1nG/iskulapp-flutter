@@ -22,7 +22,8 @@ class Features extends StatelessWidget {
         FeatureButton(
           title: 'Homework',
           icon: Icons.assignment,
-          path: '/default-page?title=Assignment',
+          path: assignmentListRoute.path,
+          visible: assignmentListRoute.allowedRoles!.contains(user.role),
         ),
         FeatureButton(
           title: 'Learn',
