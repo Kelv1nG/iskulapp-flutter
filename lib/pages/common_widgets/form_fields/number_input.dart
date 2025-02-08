@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 class NumberInputFormField extends StatelessWidget {
   final String label;
-  final Function(int?) onSaved;
+  final Function(int?)? onSaved;
   final int initialValue;
   final String? Function(String?)? validator;
   final void Function(int?)? onChanged;
@@ -15,8 +15,8 @@ class NumberInputFormField extends StatelessWidget {
     super.key,
     required this.label,
     required this.initialValue,
-    required this.onSaved,
     this.validator,
+    this.onSaved,
     this.onChanged,
     this.readOnly = false,
     this.helperText,
@@ -63,7 +63,7 @@ class NumberInputFormField extends StatelessWidget {
           onChanged: onChanged != null
               ? (value) => onChanged!(int.tryParse(value))
               : null,
-          onSaved: (value) => onSaved(int.tryParse(value ?? '')),
+          onSaved: (value) => onSaved!(int.tryParse(value ?? '')),
         ),
       ],
     );
