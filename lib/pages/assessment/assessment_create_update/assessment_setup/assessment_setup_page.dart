@@ -9,14 +9,18 @@ import 'package:school_erp/pages/common_widgets/default_layout.dart';
 import 'package:school_erp/models/assessment.dart';
 
 class AssessmentSetupPage extends StatelessWidget {
-  final AssessmentType assessmentTypeOnCreate;
+  final AssessmentType? assessmentTypeOnCreate;
   final Assessment? assessment;
 
   const AssessmentSetupPage({
-    required this.assessmentTypeOnCreate,
+    this.assessmentTypeOnCreate,
     this.assessment,
     super.key,
-  });
+  }) : assert(
+          !(assessmentTypeOnCreate == null && assessment == null) &&
+              !(assessmentTypeOnCreate != null && assessment != null),
+          'Either assessmentTypeOnCreate or assessment must be provided, but not both',
+        );
 
   @override
   Widget build(BuildContext context) {
