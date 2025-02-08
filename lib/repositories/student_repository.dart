@@ -22,7 +22,7 @@ class StudentRepository extends ReadOnlyRepository<Student> {
         return results.map(Student.fromRow).toList(growable: false);
     }
 
-    Future<Student> getStudent({
+    Future<Student> getStudentByUserIdAndAcademicYearById({
         required String userId,
         required String academicYearId
     }) async {

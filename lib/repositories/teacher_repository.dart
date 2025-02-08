@@ -7,7 +7,7 @@ class TeacherRepository extends ReadOnlyRepository<Teacher> {
     TeacherRepository({super.database})
         : super(table: teachersTable, fromRow: Teacher.fromRow);
 
-    Future<Teacher> getTeacher({
+    Future<Teacher> getTeacherByUserId({
         required String userId,
     }) async {
         var result = await database.execute(

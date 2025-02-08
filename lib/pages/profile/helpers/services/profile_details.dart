@@ -15,7 +15,7 @@ class ProfileDetails {
 
     static Future<StudentProfileDetails> forStudent(userId, academicYearId) async {
         List<Guardian> guardiansOfStudent = await guardianRepository.getGuardiansOfStudent(userId: userId);
-        Student studentDetails = await studentRepository.getStudent(userId: userId, academicYearId: academicYearId);
+        Student studentDetails = await studentRepository.getStudentByUserIdAndAcademicYearById(userId: userId, academicYearId: academicYearId);
 
         StudentProfileDetails studentProfileDetails = StudentProfileDetails(studentDetails: studentDetails, guardiansOfStudent: guardiansOfStudent);
 
@@ -23,7 +23,7 @@ class ProfileDetails {
     }
 
     static  Future<TeacherProfileDetails>forTeacher(userId) async {
-        Teacher teacherDetails = await teacherRepository.getTeacher(userId: userId);
+        Teacher teacherDetails = await teacherRepository.getTeacherByUserId(userId: userId);
 
         TeacherProfileDetails teacherProfileDetails = TeacherProfileDetails(teacherDetails: teacherDetails);
         return teacherProfileDetails;
