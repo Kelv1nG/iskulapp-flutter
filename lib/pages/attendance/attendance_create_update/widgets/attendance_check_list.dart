@@ -75,9 +75,9 @@ class AttendanceCheckListHeader extends StatelessWidget {
     return Row(
       children: const [
         Expanded(
-          flex: 3,
+          flex: 2,
           child: Padding(
-            padding: EdgeInsets.only(left: 50),
+            padding: EdgeInsets.only(left: 16),
             child: Text(
               "Student",
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -86,34 +86,38 @@ class AttendanceCheckListHeader extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 2,
+          flex: 3,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(
-                "Late",
-                style: TextStyle(fontWeight: FontWeight.bold),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    "Late",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    "Absent",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    "Present",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ),
             ],
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Center(
-            child: Text(
-              "Absent",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Center(
-            child: Text(
-              "Present",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
           ),
         ),
       ],

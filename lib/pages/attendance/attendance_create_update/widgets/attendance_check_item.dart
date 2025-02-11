@@ -36,73 +36,85 @@ class AttendanceCheckItem extends StatelessWidget {
         return Row(
           children: [
             Expanded(
-              flex: 3,
+              flex: 2,
               child: Text(
                 "${sa.student.lastName}, ${sa.student.firstName}",
                 style: const TextStyle(fontSize: 14),
               ),
             ),
             Expanded(
-              flex: 2,
-              child: Stack(
-                alignment: Alignment.center,
+              flex: 3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Radio<AttendanceStatus>(
-                    value: AttendanceStatus.late,
-                    activeColor: Colors.orange,
-                    groupValue: sa.attendance.status,
-                    onChanged: (AttendanceStatus? value) {
-                      _showTimeInModal(context);
-                    },
-                  ),
-                  if (sa.attendance.status == AttendanceStatus.late &&
-                      sa.attendance.timeIn != null)
-                    Positioned(
-                      left: 75,
-                      child: Text(
-                        formatTimeOfDay(sa.attendance.timeIn!),
-                        style: const TextStyle(fontSize: 12),
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Radio<AttendanceStatus>(
+                            value: AttendanceStatus.late,
+                            activeColor: Colors.orange,
+                            groupValue: sa.attendance.status,
+                            onChanged: (AttendanceStatus? value) {
+                              _showTimeInModal(context);
+                            },
+                          ),
+                          if (sa.attendance.status == AttendanceStatus.late &&
+                              sa.attendance.timeIn != null)
+                            Positioned(
+                              bottom: 0,
+                              child: Text(
+                                formatTimeOfDay(sa.attendance.timeIn!),
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ),
+                        ],
                       ),
                     ),
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Radio<AttendanceStatus>(
+                        value: AttendanceStatus.absent,
+                        activeColor: Colors.red,
+                        groupValue: sa.attendance.status,
+                        onChanged: (AttendanceStatus? value) {
+                          context
+                              .read<AttendanceCheckCubit>()
+                              .createUpdateAttendance(
+                                index: index,
+                                attendance: sa.attendance.copyWith(
+                                  status: value,
+                                  checkedBy: getTeacherId(context),
+                                ),
+                              );
+                        },
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Radio<AttendanceStatus>(
+                        value: AttendanceStatus.present,
+                        activeColor: Colors.green,
+                        groupValue: sa.attendance.status,
+                        onChanged: (AttendanceStatus? value) {
+                          context
+                              .read<AttendanceCheckCubit>()
+                              .createUpdateAttendance(
+                                index: index,
+                                attendance: sa.attendance.copyWith(
+                                  status: value,
+                                  checkedBy: getTeacherId(context),
+                                ),
+                              );
+                        },
+                      ),
+                    ),
+                  ),
                 ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Center(
-                child: Radio<AttendanceStatus>(
-                  value: AttendanceStatus.absent,
-                  activeColor: Colors.red,
-                  groupValue: sa.attendance.status,
-                  onChanged: (AttendanceStatus? value) {
-                    context.read<AttendanceCheckCubit>().createUpdateAttendance(
-                          index: index,
-                          attendance: sa.attendance.copyWith(
-                            status: value,
-                            checkedBy: getTeacherId(context),
-                          ),
-                        );
-                  },
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Center(
-                child: Radio<AttendanceStatus>(
-                  value: AttendanceStatus.present,
-                  activeColor: Colors.green,
-                  groupValue: sa.attendance.status,
-                  onChanged: (AttendanceStatus? value) {
-                    context.read<AttendanceCheckCubit>().createUpdateAttendance(
-                          index: index,
-                          attendance: sa.attendance.copyWith(
-                            status: value,
-                            checkedBy: getTeacherId(context),
-                          ),
-                        );
-                  },
-                ),
               ),
             ),
           ],
