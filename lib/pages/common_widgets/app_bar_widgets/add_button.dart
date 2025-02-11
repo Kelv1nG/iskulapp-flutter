@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:school_erp/features/transition/clean_slide_transition.dart';
+import 'package:go_router/go_router.dart';
 
 class AppBarAddButton extends StatelessWidget {
-  final Widget exitPage;
-  final Widget enterPage;
+  final String path;
+  // extra arguments in that can be supplied in route
+  final Map<String, dynamic>? extra;
 
-  const AppBarAddButton(
-      {super.key, required this.exitPage, required this.enterPage});
+  const AppBarAddButton({super.key, required this.path, this.extra});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        createSlideRoute(enterPage),
-      ),
+      onTap: () => context.push(path, extra: extra),
       child: Container(
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(

@@ -16,23 +16,34 @@ class AssessmentState with _$AssessmentState {
     @Default([]) List<AssessmentTaker> assessmentTakers,
     @Default([]) List<AssessmentTaker> assessmentTakersForRemoval,
     @Default(AssessmentStateStatus.initial) AssessmentStateStatus status,
-    @Default(false) bool isLoading,
+    @Default(true) bool isLoading,
     String? errorMessage,
   }) = _AssessmentState;
 
   factory AssessmentState.initial({
     required String teacherId,
-    required AssessmentType assessmentTypeOnCreate,
+    AssessmentType? assessmentTypeOnCreate,
     Assessment? existingAssessment,
   }) {
+    assert(
+      !(assessmentTypeOnCreate == null && existingAssessment == null) &&
+          !(assessmentTypeOnCreate != null && existingAssessment != null),
+      'Either assessmentTypeOnCreate or assessment must be provided, but not both',
+    );
+
+    if (existingAssessment == null) {
+      return AssessmentState(
+        assessment: Assessment.initialize(
+          preparedById: teacherId,
+          assessmentType: assessmentTypeOnCreate!,
+        ),
+        actionType: ActionType.create,
+      );
+    }
+
     return AssessmentState(
-      assessment: existingAssessment ??
-          Assessment.initialize(
-            preparedById: teacherId,
-            assessmentType: assessmentTypeOnCreate,
-          ),
-      actionType:
-          existingAssessment != null ? ActionType.update : ActionType.create,
+      assessment: existingAssessment,
+      actionType: ActionType.update,
     );
   }
 }

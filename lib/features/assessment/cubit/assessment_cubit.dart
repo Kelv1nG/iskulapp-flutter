@@ -12,9 +12,9 @@ class AssessmentCubit extends Cubit<AssessmentState> {
 
   AssessmentCubit({
     required AssessmentService assessmentService,
-    required AssessmentType assessmentTypeOnCreate,
     required String teacherId,
     Assessment? assessment,
+    AssessmentType? assessmentTypeOnCreate,
   })  : _assessmentService = assessmentService,
         super(AssessmentState.initial(
           teacherId: teacherId,
@@ -136,7 +136,7 @@ class AssessmentCubit extends Cubit<AssessmentState> {
 
   Future<void> _loadAssessmentTakers() async {
     try {
-      /// load assessment takers when updating
+      // load assessment takers when updating
       if (state.actionType == ActionType.update &&
           state.assessment.id != null) {
         final assessmentTakers = await assessmentTakerRepository

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:school_erp/enums/assessment_type.dart';
+import 'package:school_erp/features/assessment/cubit/assessment_cubit.dart';
 import 'package:school_erp/features/auth/auth.dart';
 import 'package:school_erp/features/transition/clean_slide_transition.dart';
+import 'package:school_erp/models/assessment.dart';
+import 'package:school_erp/pages/assessment/assessment_create_update/assessment_question_setup/assessment_question_setup_page.dart';
+import 'package:school_erp/pages/assessment/assessment_create_update/assessment_setup/assessment_setup_page.dart';
+import 'package:school_erp/pages/assessment/assessment_create_update/assessment_takers/assessment_takers_page.dart';
 import 'package:school_erp/pages/assignment/assignment_list_page/assignment_list_page.dart';
 import 'package:school_erp/pages/attendance/attendance_calendar/attendance_calendar_page.dart';
 import 'package:school_erp/pages/attendance/attendance_create_update/attendance_create_update_page.dart';
@@ -80,14 +86,64 @@ final router = GoRouter(
       ),
     ),
     middlewareRoute(
-        name: assignmentListRoute.name,
-        path: assignmentListRoute.path,
-        pageBuilder: (context, state) => createSlideRoutePage(
-              AssignmentListPage(),
-            ),
-        middleware: [
-          roleMiddleware(assignmentListRoute.allowedRoles!),
-        ]),
+      name: assignmentListRoute.name,
+      path: assignmentListRoute.path,
+      pageBuilder: (context, state) => createSlideRoutePage(
+        AssignmentListPage(),
+      ),
+      middleware: [
+        roleMiddleware(assignmentListRoute.allowedRoles!),
+      ],
+    ),
+    middlewareRoute(
+      name: assessmentSetupRoute.name,
+      path: assessmentSetupRoute.path,
+      pageBuilder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>;
+        final assessment = extra['assessment'] as Assessment?;
+        final assessmentTypeOnCreate =
+            extra['assessmentTypeOnCreate'] as AssessmentType?;
+
+        if (assessment != null) {
+          return createSlideRoutePage(
+              AssessmentSetupPage(assessment: assessment));
+        }
+        return createSlideRoutePage(AssessmentSetupPage(
+            assessmentTypeOnCreate: assessmentTypeOnCreate));
+      },
+      middleware: [
+        roleMiddleware(assessmentSetupRoute.allowedRoles!),
+      ],
+    ),
+    middlewareRoute(
+      name: assessmentTakersRoute.name,
+      path: assessmentTakersRoute.path,
+      pageBuilder: (context, state) {
+        final assessmentCubit = state.extra as AssessmentCubit;
+
+        return createSlideRoutePage(
+          BlocProvider.value(
+            value: assessmentCubit,
+            child: const AssessmentTakersPage(),
+          ),
+        );
+      },
+    ),
+    middlewareRoute(
+      name: assessmentQuestionSetupRoute.name,
+      path: assessmentQuestionSetupRoute.path,
+      pageBuilder: (context, state) {
+        final assessmentCubit = state.extra as AssessmentCubit;
+
+        return createSlideRoutePage(
+          BlocProvider.value(
+            value: assessmentCubit,
+            child: const AssessmentQuestionSetupPage(),
+          ),
+        );
+      },
+      middleware: [roleMiddleware(assessmentQuestionSetupRoute.allowedRoles!)],
+    ),
     middlewareRoute(
       name: billingRoute.name,
       path: billingRoute.path,
@@ -96,9 +152,7 @@ final router = GoRouter(
           DefaultPage(title: 'Billing'),
         );
       },
-      middleware: [
-        roleMiddleware(billingRoute.allowedRoles!),
-      ],
+      middleware: [roleMiddleware(billingRoute.allowedRoles!)],
     ),
     GoRoute(
       name: defaultPageRoute.name,
